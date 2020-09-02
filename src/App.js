@@ -1,36 +1,16 @@
 import React from 'react';
 import './App.css';
+import attributesPanel from 'components/AttributesPanel';
+import developerPanel from 'components/DeveloperPanel';
 import headerPanel from 'components/HeaderPanel';
-
-const listsPanel = (
-  <span>Lists Panel HERE</span>
-);
-
-const patientsPanel = (
-  <div>
-    Patients Panel HERE
-  </div>
-);
-
-const attributesPanel = (
-  <div>
-    Attributes Panel HERE
-  </div>
-);
-
-const developerPanel = (
-  <div>
-    Developer Messages HERE
-  </div>
-);
+import listsPanel from 'components/ListsPanel';
+import patientsPanel from 'components/PatientsPanel';
 
 function App() {
   return (
     <div className="App">
       <div className="row">
-        <div className="top">
-          {headerPanel}
-        </div>
+        <div className="top">{headerPanel}</div>
       </div>
 
       <div className="row">
@@ -40,9 +20,7 @@ function App() {
       </div>
 
       <div className="row">
-        <div className="bottom">
-          {developerPanel}
-        </div>
+        <div className="bottom">{developerPanel}</div>
       </div>
     </div>
   );
