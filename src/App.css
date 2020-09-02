@@ -1,38 +1,66 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.top {
+  float: left;
+  width: 100%;
+  padding: 10px;
+  background-color:#00CAFE;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.app-title {
+  font-size: 180%;
+}
+
+.server {
+  float: right;
+  line-height: 200%;
+}
+
+.left {
+  float: left;
+  width: 25%;
+  padding: 10px;
+  background-color:#FFCAFE;
+}
+
+.center {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+.right {
+  float: left;
+  width: 25%;
+  padding: 10px;
+  background-color:#C0FFEE;
+}
+
+.bottom {
+  float: left;
+  width: 100%;
+  padding: 10px;
+  background-color:#B1CAFE;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .left {
+    width: 100%;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  .center {
+    width: 100%;
   }
-  to {
-    transform: rotate(360deg);
+  .right {
+    width: 100%;
   }
 }
