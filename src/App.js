@@ -1,18 +1,6 @@
 import React from 'react';
 import './App.css';
-
-// TODO: move this to components/appHeader.js
-// TODO: replace this with a blueprint FormGroup?
-const headerPanel = (
-  <div>
-    <span class="app-title">Patient Lists Demo App</span>
-    <span class="server">
-      FHIR Server Root
-      <input></input>
-      <button>Refresh Lists</button>
-    </span>
-  </div>
-);
+import headerPanel from 'components/HeaderPanel';
 
 const listsPanel = (
   <span>Lists Panel HERE</span>
@@ -38,21 +26,21 @@ const developerPanel = (
 
 function App() {
   return (
-    <div classname="App">
-      <div class="row">
-        <div class="top">
+    <div className="App">
+      <div className="row">
+        <div className="top">
           {headerPanel}
         </div>
       </div>
 
-      <div class="row">
-        <div class="left">{listsPanel}</div>
-        <div class="center">{patientsPanel}</div>
-        <div class="right">{attributesPanel}</div>
+      <div className="row">
+        <div className="left">{listsPanel}</div>
+        <div className="center">{patientsPanel}</div>
+        <div className="right">{attributesPanel}</div>
       </div>
 
-      <div class="row">
-        <div class="bottom">
+      <div className="row">
+        <div className="bottom">
           {developerPanel}
         </div>
       </div>
