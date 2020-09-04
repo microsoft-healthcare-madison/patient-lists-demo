@@ -1,7 +1,43 @@
 import React from 'react';
 import 'components/ListsPanel.css'
-import { Checkbox } from "@blueprintjs/core";
+import { Button, Checkbox, Collapse } from "@blueprintjs/core";
+import { Suggest } from "@blueprintjs/select";
 
+
+// This component allows the user to select a 'managingEntity' from the FHIR
+// server.
+function ManagingEntity(props) {
+  React.useEffect(() => {
+    console.log('ManagingEntity: I need to update');
+  }, [props.serverRootURL]);  // XXX
+  const [isOpen, setIsOpen] = React.useState(true);
+  return (
+    <div>
+    <Button onClick={() => { setIsOpen(!isOpen); console.log('HI'); }}>Managing Entity</Button>
+    <Collapse
+      isOpen={isOpen}
+      keepChildrenMounted="true"
+    >
+      <table border="1"><tbody>
+        <tr><td>{locations}</td></tr>
+        <tr><td>{practitioners}</td></tr>
+        <tr><td>{organizations}</td></tr>
+        <tr><td>{careTeams}</td></tr>
+      </tbody></table>
+    </Collapse>
+    </div>
+  );
+}
+
+// TODO: return a blueprint MultiSelect here
+function ListList(props) {
+  return (
+    <>
+      <h4>Lists</h4>
+
+    </>
+  )
+}
 
 // TODO: get rid of these selectors - they should be dynamically populated from the server when a discovery is requested.
 const locations = (
@@ -56,30 +92,37 @@ class ListsPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      serverRoot: props.serverRootURL
+      groups: null,
+      serverRoot: props.serverRootURL,
     };
-    this.handleServerDiscovery = this.handleServerDiscovery.bind(this);
   }
 
-  handleServerDiscovery(event) {
-    this.props.onServerDiscovery(event.target.value);
-    console.log("LIST PANEL WANTS TO REFRESH FILTER BOXES")
+  // TODO: modify the query to include ManagingEntity attributes (and anything else)
+  refreshGroups() {
+    fetch(this.props.serverRootURL + '/Group')
+      .then(response => response.json())
+      .then(bundle => this.setState({ groups: bundle}))
+      .then(() => { console.log(this.state.groups); })  // XXX
   }
 
+  componentDidMount() {
+    this.refreshGroups();
+  }
+
+  // TODO: componentize the remaining UI objects (Filters, Lists, Header)
+  // TODO: replace the Filters with text input boxes temporarily
+  // TODO: attempt to scrape the server, pulling all Locations to populate the filter
+  // TODO: query the server to get all the Lists, populating the checklist component (using the filters to select lists).
+  // TODO: implement the Resolve Patients button.
+  // TODO: incorporate the care team by provider taxonomy (maybe???) - http://hl7.org/fhir/us/core/STU3.1.1/ValueSet-us-core-careteam-provider-roles.html
+  // TODO: beautify the header and Resolve button.
   render() {
     return (
       <>
-        <div className="debug">{this.props.serverRootURL}</div>
         <span>Patient Lists</span>
-        <button>Resolve Patients</button>
+        <button>Display Patients</button>
 
-        <h4>Filters</h4>
-        <table border="1"><tbody>
-          <tr><td>{locations}</td></tr>
-          <tr><td>{practitioners}</td></tr>
-          <tr><td>{organizations}</td></tr>
-          <tr><td>{careTeams}</td></tr>
-        </tbody></table>
+        <ManagingEntity serverRootURL={this.props.serverRootURL} />
 
         <h4>Lists</h4>
         <table><tbody>
