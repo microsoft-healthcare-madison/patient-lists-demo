@@ -1,20 +1,16 @@
 import React, {useState} from 'react';
 import './App.css';
-import attributesPanel from 'components/AttributesPanel';
-import developerPanel from 'components/DeveloperPanel';
 import HeaderPanel from 'components/HeaderPanel';
 import ListsPanel from 'components/ListsPanel';
+import attributesPanel from 'components/AttributesPanel';
+import developerPanel from 'components/DeveloperPanel';
 import patientsPanel from 'components/PatientsPanel';
 
-// TODO: update this with the public-facing URL.
+// TODO: update this with the public-facing URL, when it's available.
 const defaultServerRootURL = "http://localhost:8080/hapi-fhir-jpaserver/fhir/";
 
 function App() {
-  // TODO: bind the ListsPanel serverRootURL to the HeaderPanel.state
   const [serverRootURL, setServerRootURL] = useState(defaultServerRootURL);
-  React.useEffect(() => {
-    console.log('HI: Updated the server root URL');
-  }, [serverRootURL]);  // XXX
 
   return (
     <div className="App">
@@ -27,7 +23,11 @@ function App() {
       </div>
 
       <div className="row">
-        <div className="left"><ListsPanel serverRootURL={serverRootURL}/></div>
+        <div className="left">
+          <ListsPanel
+            serverRootURL={serverRootURL}
+          />
+        </div>
         <div className="center">{patientsPanel}</div>
         <div className="right">{attributesPanel}</div>
       </div>

@@ -3,6 +3,9 @@ import 'components/HeaderPanel.css'
 
 const appTitle = "Patient Lists Demo App";
 
+// NICE: Remake this as a NavBar: https://blueprintjs.com/docs/#core/components/navbar
+//       The Server Root URL can be part of a Settings Cog, then.
+
 // NICE: as the server root value is typed, evaluate it for availability / regex sanity.
 //       maybe after a few seconds time-out, enable the Discover Patient Lists button.
 //       during the timeout period, display a spinner to indicate something's happening.
