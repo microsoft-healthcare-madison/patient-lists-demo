@@ -1,10 +1,15 @@
 import React, {useState} from 'react';
-import './App.css';
 import HeaderPanel from 'components/HeaderPanel';
 import ListsPanel from 'components/ListsPanel';
 import attributesPanel from 'components/AttributesPanel';
 import developerPanel from 'components/DeveloperPanel';
 import patientsPanel from 'components/PatientsPanel';
+
+import './App.css';
+import "normalize.css";
+import '@blueprintjs/core/lib/css/blueprint.css';
+import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+import '@blueprintjs/select/lib/css/blueprint-select.css';
 
 // TODO: update this with the public-facing URL, when it's available.
 const defaultServerRootURL = "http://localhost:8080/hapi-fhir-jpaserver/fhir/";
