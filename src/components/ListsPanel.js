@@ -1,8 +1,8 @@
 import React from 'react';
 import 'components/ListsPanel.css'
 import { Button, Checkbox, Collapse } from "@blueprintjs/core";
-//import { Suggest } from "@blueprintjs/select";
 
+// TODO: move the patient lists api logic to a separate file (view <=> logic).
 const codeSystem = "http://argonautproject.org/patient-lists/CodeSystem/characteristics";
 
 
@@ -19,21 +19,25 @@ function getCharacteristics(resources, code) {
   );
 }
 
-// Returns the sorted set of Location references from lists in a bundle.
+// Returns the sorted set of code references from lists in a bundle.
 function getRefsFrom(bundle, code) {
   const resources = getResources(bundle);
-  const characteristics = getCharacteristics(resources, code);
-  const locations = new Set(characteristics.map(x => x.valueReference.reference));
+  const ch7istics = getCharacteristics(resources, code);
+  const locations = new Set(ch7istics.map(x => x.valueReference.reference));
   return [...locations].sort();
 }
 
+
 // TODO: use the props.locations to populate a list of locations to select
 function LocationSelector(props) {
-  console.log(props);
   return (
-    <>
-      {props.locations}
-    </>
+    <table>
+      <tbody>{
+        props.locations.map((x) => {
+          return <tr key={x}><td><Checkbox>{x}</Checkbox></td></tr>
+        })
+      }</tbody>
+    </table>
   );
 }
 
@@ -72,7 +76,7 @@ function ListSelector(props) {
   return (
     <table>
       <tbody>
-        <tr><td><Checkbox>List 1</Checkbox></td></tr>
+        <tr><td><Checkbox>List 1 - Empty</Checkbox></td></tr>
         <tr><td><Checkbox>List 2</Checkbox></td></tr>
         <tr><td><Checkbox>List 3</Checkbox></td></tr>
         <tr><td><Checkbox>List 4</Checkbox></td></tr>
@@ -97,12 +101,12 @@ class ListsPanel extends React.Component {
     fetch(this.props.serverRootURL + '/Group')
       .then(response => response.json())
       .then(bundle => this.setState({ groups: bundle}))
-      .then(() => { console.log("REFRESHED", this.state.groups); })  // XXX
+//      .then(() => { console.log("REFRESHED", this.state.groups); })  // XXX
   }
 
   componentDidMount() {
     this.refreshGroups();
-    // NICE: examine the fetched Groups, logging to DeveloperPanel if they look malformed
+    // NICE: examine the fetched Groups, logging to DeveloperPanel if any look malformed
   }
 
   // TODO: componentize the remaining UI objects (Filters, Lists, Header)
@@ -110,9 +114,10 @@ class ListsPanel extends React.Component {
   render() {
     const bundle = this.state.groups;
     const locations = getRefsFrom(bundle, 'at-location');
+    // TODO: also collect Orgs and Docs from the ManagingEntity field (either should work).
     const orgs = getRefsFrom(bundle, 'attributed-to-organization');
     const docs = getRefsFrom(bundle, 'attributed-to-practitioner');
-    const careTeams = getRefsFrom(bundle, 'attributed-to-careteam');
+    //const careTeams = getRefsFrom(bundle, 'attributed-to-careteam');
     // TODO: drop the this.state.groups bundle (since it might be big)?
     // TODO: get the component selections, saving them into an object.
     const selections = {};

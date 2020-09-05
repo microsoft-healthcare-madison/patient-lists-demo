@@ -10,6 +10,9 @@ const appTitle = "Patient Lists Demo App";
 //       maybe after a few seconds time-out, enable the Discover Patient Lists button.
 //       during the timeout period, display a spinner to indicate something's happening.
 
+// NICE: add a blueprint Toast when a server entry has been entered and accpeted:
+//       https://blueprintjs.com/docs/#core/components/toast
+
 function ServerInputForm(props) {
   const [value, setValue] = React.useState(props.serverRootURL);
 
