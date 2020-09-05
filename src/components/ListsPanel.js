@@ -102,6 +102,7 @@ class ListsPanel extends React.Component {
 
   componentDidMount() {
     this.refreshGroups();
+    // NICE: examine the fetched Groups, logging to DeveloperPanel if they look malformed
   }
 
   // TODO: componentize the remaining UI objects (Filters, Lists, Header)
