@@ -10,6 +10,7 @@ Useage:
     --delete-all - delete all resources matching the tag
 
 TODO:
+  [ ] pep8 this
   [ ] inspect the response to map file fullUrls to server fullUrls
   [ ] remove the deduplicated output to files option (or fix it to work with transaction bundles).
   [ ] send deduplicated contents to the server.
