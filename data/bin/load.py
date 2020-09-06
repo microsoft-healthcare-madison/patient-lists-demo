@@ -32,6 +32,7 @@ import requests  # pip3 install requests
 
 TEST_SERVER = 'http://localhost:8080/hapi-fhir-jpaserver/fhir'
 
+
 class Error(Exception):
     pass
 
