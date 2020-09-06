@@ -1,4 +1,25 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Patient Lists Demo App
+## 2020-Sep Connectathon
+This app will be used by Patient Lists connectathon participants to test their servers against a simple app.  Non-server participants (who are client-focused) can use the provided server against their apps, too.
+
+## Local Test Data
+To run this app locally - you can run a local hapi server populated with Synthea-generated data, which is provided in the root-level `data` directory.
+
+The script that populates the local server runs in `python3` and has a few dependencies which are recorded in `requirements.txt`.  To install them:
+```shell
+pip3 install requirements.txt
+```
+
+To launch a local hapi server, populated with the example data, run the provided script in a terminal and leave it running:
+```shell
+./data/bin/run-hapi.sh
+```
+
+To interrupt the server, press `Ctrl-C` to stop it.
+
+*Below is the default create-react-app documentation...*
+
+# This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
