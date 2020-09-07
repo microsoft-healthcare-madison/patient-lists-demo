@@ -8,20 +8,23 @@ const codeSystem = "http://argonautproject.org/patient-lists/CodeSystem/characte
 
 // Returns the non-empty resources from a bundle.
 function getResources(bundle) {
-  return bundle ? bundle.entry.map(e => e.resource).filter(Boolean) : [];
+  return bundle && bundle.entry ? bundle.entry.map(e => e.resource).filter(Boolean) : [];
 }
 
 // Returns the patient list characteristics matching a code (ie 'at-location').
 function getCharacteristics(resources, code) {
   const hasChars = resources.flatMap(x => x.characteristic).filter(Boolean);
   return hasChars.filter(
-    x => x.code.coding.some(c => c.system === codeSystem && c.code === code)
+    x => x.code && x.code.coding && x.code.coding.some(c => c.system === codeSystem && c.code === code)
   );
 }
 
 // Returns the sorted set of code references from lists in a bundle.
 function getRefsFrom(bundle, code) {
   const resources = getResources(bundle);
+  if (!resources) {
+    return [];
+  }
   const ch7istics = getCharacteristics(resources, code);
   const locations = new Set(ch7istics.map(x => x.valueReference.reference));
   return [...locations].sort();
@@ -86,6 +89,31 @@ function ListSelector(props) {
   );
 }
 
+// Returns a de-paginated bundle of resources from an initial URL.
+async function drain(resourceUrl) {
+  const bundles = [];
+  let url = resourceUrl;
+  do {
+    // Fetch a bundle from the URL.
+    await fetch(url)
+      .then(response => response.json())
+      .then(bundle => bundles.push(bundle));
+    const newBundle = bundles.pop();
+
+    // If the search was paginated, prepare to fetch the following bundle.
+    const next = newBundle.link.filter(x => x.relation === 'next');
+    url = next.length ? next[0].url : undefined;
+
+    // Build up the entries in the first bundle to include entries from all.
+    if (bundles.length === 0) {
+      bundles.push(newBundle);
+    } else {
+      bundles[0].entry.push(...newBundle.entry);
+    }
+  } while (url);
+  return bundles[0];
+}
+
 class ListsPanel extends React.Component {
   constructor(props) {
     super(props);
@@ -95,18 +123,23 @@ class ListsPanel extends React.Component {
     };
   }
 
-  // TODO: modify the query to include ManagingEntity attributes (and anything else)
-  // TODO: modify this to drain all the Groups if the results are paginated.
+  // TODO: modify the query to include ManagingEntity attributes (or anything else)
   refreshGroups() {
-    fetch(this.props.serverRootURL + '/Group')
-      .then(response => response.json())
-      .then(bundle => this.setState({ groups: bundle}))
-//      .then(() => { console.log("REFRESHED", this.state.groups); })  // XXX
+    drain(this.props.serverRootURL + '/Group')
+      .then(bundle => this.setState({ groups: bundle }))
+      .then(() => { console.log('REFRESHED', this.state.groups); });
+    this.setState({ serverRoot: this.props.serverRootURL });
   }
 
   componentDidMount() {
     this.refreshGroups();
-    // NICE: examine the fetched Groups, logging to DeveloperPanel if any look malformed
+    // NICE: examine the fetched Groups, logging a warning to DeveloperPanel if any look malformed
+  }
+
+  componentDidUpdate() {
+    if (this.state.serverRoot !== this.props.serverRootURL) {
+      this.refreshGroups();
+    }
   }
 
   // TODO: componentize the remaining UI objects (Filters, Lists, Header)

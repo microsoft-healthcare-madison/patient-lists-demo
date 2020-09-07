@@ -13,9 +13,11 @@ import '@blueprintjs/select/lib/css/blueprint-select.css';
 
 // TODO: update this with the public-facing URL, when it's available.
 const defaultServerRootURL = "http://localhost:8080/hapi-fhir-jpaserver/fhir/";
+//const defaultServerRootURL = 'http://hapi.fhir.org/baseR4/';
 
 function App() {
   const [serverRootURL, setServerRootURL] = useState(defaultServerRootURL);
+  // TODO: create developer-panel state to be shared with other components
 
   return (
     <div className="App">
