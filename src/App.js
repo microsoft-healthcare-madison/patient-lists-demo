@@ -23,8 +23,8 @@ function App() {
     const message = (
       <pre key={Date.now()}>Updated FHIR Server root to: {serverRootURL}</pre>
     );
-    setDeveloperMessages([message, ...developerMessages]);
-  }, [serverRootURL]);  // eslint-disable-line react-hooks/exhaustive-deps
+    setDeveloperMessages(d => [message, ...d]);
+  }, [serverRootURL]);
 
   return (
     <div className="App">
