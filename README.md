@@ -12,7 +12,17 @@ pip3 install requirements.txt
 
 To launch a local hapi server, populated with the example data, run the provided script in a terminal and leave it running:
 ```shell
-./data/bin/run-hapi.sh
+$ cd data
+$ ./bin/run-hapi.sh
+Waiting for server to start...
+  ... still starting
+  ... still starting
+HAPI IS UP
+Loading example data...
+LOADING BUNDLE...
+LOADING BUNDLE...
+DONE!
+Press Ctrl-C to close the server process...
 ```
 
 To interrupt the server, press `Ctrl-C` to stop it.
