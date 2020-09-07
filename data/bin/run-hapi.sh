@@ -10,11 +10,11 @@ PORT="${PORT:-8080}"
 DATA="example"
 
 # Switch to the dir _above_ where this script lives.
-THIS_DIR="$( dirname ${0%/*} )"
-cd "${THIS_DIR}"/..
+SCRIPT_DIR="$( dirname ${0} )"
+cd "${SCRIPT_DIR}"/..
 
 # Launch the dockerized hapi server.
-docker run -p $PORT:$PORT hapiproject/hapi:latest &
+docker run -p $PORT:$PORT hapiproject/hapi:latest &>/dev/null &
 
 # Busy-wait until the server is up.
 echo "Waiting for server to start..."
@@ -27,7 +27,7 @@ done
 
 echo "Loading example data..."
 ./bin/load.py -o "${DATA}"
-echo "DONE!"
+echo 'DONE!'
 
 echo "Press Ctrl-C to close the server process..."
 wait
