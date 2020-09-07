@@ -12,7 +12,9 @@ function getResources(bundle) {
 function getCharacteristics(resources, code) {
   const hasChars = resources.flatMap(x => x.characteristic).filter(Boolean);
   return hasChars.filter(
-    x => x.code && x.code.coding && x.code.coding.some(c => c.system === codeSystem && c.code === code)
+    x => x.code && x.code.coding && x.code.coding.some(
+      c => c.system === codeSystem && c.code === code
+    )
   );
 }
 
@@ -28,7 +30,7 @@ export function getRefsFrom(bundle, code) {
 }
 
 // Returns a de-paginated bundle of resources from an initial URL.
-export async function drain(resourceUrl) {
+export async function drain(resourceUrl, progressCallback) {
   const bundles = [];
   let url = resourceUrl;
   do {
@@ -48,6 +50,17 @@ export async function drain(resourceUrl) {
     } else {
       bundles[0].entry.push(...newBundle.entry);
     }
+
+    // Inform the caller of the current progress via callback, if defined.
+    if (progressCallback) {
+      progressCallback(bundles[0].entry.length, bundles[0].total);
+    }
   } while (url);
   return bundles[0];
+}
+
+// Returns a list of resources from a bundle based on in-app selections.
+export function filterLists(bundle, selections) {
+  // TODO: filter the bundle resources using the selections.
+  return bundle.entry;
 }
