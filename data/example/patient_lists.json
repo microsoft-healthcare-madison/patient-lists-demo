@@ -9,7 +9,7 @@
         "id": "0",
         "actual": true,
         "type": "person",
-        "name": "Empty Group"
+        "name": "Empty 1"
       },
       "request": {
         "method": "POST",
@@ -22,16 +22,8 @@
         "resourceType": "Group",
         "id": "1",
         "actual": true,
-        "type": "person",
-        "name": "Singleton Group",
-        "managingEntity": {
-          "reference": "Organization/3"
-        },
-        "member": [ {
-          "entity": {
-            "reference": "Patient/1"
-          }
-        } ]
+        "type": "animal",
+        "name": "Empty 2"
       },
       "request": {
         "method": "POST",
@@ -45,9 +37,9 @@
         "id": "2",
         "actual": true,
         "type": "person",
-        "name": "Singleton Group",
+        "name": "Organization Managed 1",
         "managingEntity": {
-          "reference": "Practitioner/4"
+          "reference": "Organization/3"
         },
         "member": [ {
           "entity": {
@@ -67,7 +59,29 @@
         "id": "3",
         "actual": true,
         "type": "person",
-        "name": "Location Group",
+        "name": "Practitioner Managed 1",
+        "managingEntity": {
+          "reference": "Practitioner/4"
+        },
+        "member": [ {
+          "entity": {
+            "reference": "Patient/1"
+          }
+        } ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8080/hapi-fhir-jpaserver/fhir/Group/4",
+      "resource": {
+        "resourceType": "Group",
+        "id": "4",
+        "actual": true,
+        "type": "person",
+        "name": "At-Location",
         "characteristic": [ {
           "code": {
             "coding": [ {
