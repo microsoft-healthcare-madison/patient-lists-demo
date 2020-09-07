@@ -22,9 +22,8 @@ function ServerInputForm(props) {
   }
 
   const serverRootChanged = (event) => {
-    setValue(event.target.value);
+    setValue(event.target.value.trim());
     // TODO: examine the server value as it is entered.
-    console.log('CHANGED', event.target.value);  // XXX
   }
 
   // TODO: replace the homebrewed form with a blueprint FormGroup, maybe.
@@ -48,7 +47,9 @@ class HeaderPanel extends React.Component {
       <div>
         <span className="app-title">{appTitle}</span>
         <ServerInputForm
+          developerMessages={this.props.developerMessages}
           serverRootURL={this.props.serverRootURL}
+          setDeveloperMessages={this.props.setDeveloperMessages}
           setServerRootURL={this.props.setServerRootURL}
         />
       </div>  

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import HeaderPanel from 'components/HeaderPanel';
 import ListsPanel from 'components/ListsPanel';
+import DeveloperPanel from 'components/DeveloperPanel';
 import attributesPanel from 'components/AttributesPanel';
-import developerPanel from 'components/DeveloperPanel';
 import patientsPanel from 'components/PatientsPanel';
 
 import './App.css';
@@ -17,14 +17,23 @@ const defaultServerRootURL = "http://localhost:8080/hapi-fhir-jpaserver/fhir/";
 
 function App() {
   const [serverRootURL, setServerRootURL] = useState(defaultServerRootURL);
-  // TODO: create developer-panel state to be shared with other components
+  const [developerMessages, setDeveloperMessages] = useState([]);
+
+  React.useEffect(() => {
+    const message = (
+      <pre key={Date.now()}>Updated FHIR Server root to: {serverRootURL}</pre>
+    );
+    setDeveloperMessages([message, ...developerMessages]);
+  }, [serverRootURL]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="App">
       <div className="row">
         <div className="top">
           <HeaderPanel
+            developerMessages={developerMessages}
             serverRootURL={serverRootURL}
+            setDeveloperMessages={setDeveloperMessages}
             setServerRootURL={setServerRootURL}
           /></div>
       </div>
@@ -32,7 +41,9 @@ function App() {
       <div className="row">
         <div className="left">
           <ListsPanel
+            developerMessages={developerMessages}
             serverRootURL={serverRootURL}
+            setDeveloperMessages={setDeveloperMessages}
           />
         </div>
         <div className="center">{patientsPanel}</div>
@@ -40,7 +51,11 @@ function App() {
       </div>
 
       <div className="row">
-        <div className="bottom">{developerPanel}</div>
+        <div className="bottom">
+          <DeveloperPanel
+            developerMessages={developerMessages}
+          />
+        </div>
       </div>
     </div>
   );
