@@ -15,6 +15,7 @@ const appTitle = "Patient Lists Demo App";
 
 function ServerInputForm(props) {
   const [value, setValue] = React.useState(props.serverRootURL);
+  const [valid, setValid] = React.useState(true);
 
   const discoverListsButton = (event) => {
     event.preventDefault();
@@ -22,8 +23,16 @@ function ServerInputForm(props) {
   }
 
   const serverRootChanged = (event) => {
-    setValue(event.target.value.trim());
-    // TODO: examine the server value as it is entered.
+    const value = event.target.value.trim();
+    setValue(value);
+    try {
+      new URL(value);
+      fetch(value + '/CapabilityStatement')
+        .then(() => setValid(true))
+        .catch(() => setValid(false));
+    } catch(e) {
+      setValid(false);
+    }
   }
 
   // TODO: replace the homebrewed form with a blueprint FormGroup, maybe.
@@ -36,7 +45,7 @@ function ServerInputForm(props) {
         value={value}
         onChange={serverRootChanged}
       />
-      <input type="submit" value="Discover Patient Lists" />
+      <input type="submit" disabled={!valid} value="Discover Patient Lists" />
     </form>
   );
 }
