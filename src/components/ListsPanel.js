@@ -39,7 +39,7 @@ class ListsPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      groups: [],
+      groups: { entry: []},
       locations: [],
       serverRoot: props.serverRootURL,
     };

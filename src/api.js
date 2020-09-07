@@ -65,5 +65,7 @@ export function filterLists(bundle, selections) {
   if (selections.length) {
     console.warn('Not Implemented yet: api.filterLists', selections);  // XXX
   }
-  return bundle.entry;
+  return [...bundle.entry].sort((a, b) => {
+    return a.resource.name.localeCompare(b.resource.name);
+  });
 }
