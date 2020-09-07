@@ -1,63 +1,36 @@
-import { drain, getRefsFrom } from 'api';
+import { drain, getRefsFrom, filterLists } from 'api';
 import React from 'react';
 import 'components/ListsPanel.css'
-import { Button, Checkbox, Collapse } from "@blueprintjs/core";
+import { Resource } from 'components/FHIRResource';
 
+const debug = false;  // XXX
 
-// TODO: use the props.locations to populate a list of locations to select
-function LocationSelector(props) {
+// A FHIR Resource in a table row.
+function ResourceRow(props) {
+  const resource = props.resource;
+  const key = `${resource.resourceType}/${resource.id}`;
+  return (
+    <tr key={key}><td>
+      <Resource
+        display={props.resource.name}
+        resource={props.resource}
+      />
+    </td></tr>
+  );
+}
+
+// A list of patient lists, pre-filtered by the current filter selection.
+function ListSelector(props) {
+  if (!props.lists) {
+    return <></>;
+  }
   return (
     <table>
       <tbody>{
-        props.locations.map((x) => {
-          return <tr key={x}><td><Checkbox>{x}</Checkbox></td></tr>
+        props.lists.map((x) => {
+          return ResourceRow({ resource: x.resource })
         })
       }</tbody>
-    </table>
-  );
-}
-
-// This component allows the user to select a 'managingEntity' from the FHIR
-// server.
-function ManagingEntity(props) {
-  const [isVisible, setIsVisible] = React.useState(false);
-  // TODO: for the filters, there needs to be a state and a setter for each.
-  // TODO: create a React.useState for the selectors in the calling function, passing them through props
-  // TODO: find a suitable blueprint object that can render a list given state and setters  MultiSelect, maybe?
-  return (
-    <>
-      <Button
-        onClick={ () => { setIsVisible(!isVisible); } }
-      >Managing Entity</Button>
-      <Collapse
-        isOpen={isVisible}
-        keepChildrenMounted="true"
-      >
-        <>
-          <Button>Organization</Button>
-          <Button>Practitioner</Button>
-        </>
-      </Collapse>
-    </>
-  );
-}
-
-function getSelectedLists(bundle, selections) {
-  return [];
-}
-
-// TODO: populate this based on the properties selected
-// TODO: define the parameters in a function comment
-function ListSelector(props) {
-  return (
-    <table>
-      <tbody>
-        <tr><td><Checkbox>List 1 - Empty</Checkbox></td></tr>
-        <tr><td><Checkbox>List 2</Checkbox></td></tr>
-        <tr><td><Checkbox>List 3</Checkbox></td></tr>
-        <tr><td><Checkbox>List 4</Checkbox></td></tr>
-        <tr><td><Checkbox>List 5</Checkbox></td></tr>
-      </tbody>
     </table>
   );
 }
@@ -66,57 +39,68 @@ class ListsPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      groups: null,
+      groups: [],
+      locations: [],
       serverRoot: props.serverRootURL,
     };
   }
 
-  // TODO: modify the query to include ManagingEntity attributes (or anything else)
-  refreshGroups() {
-    drain(this.props.serverRootURL + '/Group')
-      .then(bundle => this.setState({ groups: bundle }))
-      .then(() => { console.log('REFRESHED', this.state.groups); });
-    this.setState({ serverRoot: this.props.serverRootURL });
+  // NICE: update something on-screen while data is loading.
+  progressCallback(resourceType, loaded, total) {
+    console.log(`Loaded ${loaded} of ${total} ${resourceType} records`);  // XXX
+  }
+
+  refreshResources(resourceType, stateLocation, validator) {
+    const url = `${this.props.serverRootURL}/${resourceType}`;
+    drain(url, (x, total) => { this.progressCallback(resourceType, x, total); })
+      .then((bundle) => {
+        const newState = {};
+        newState[stateLocation] = bundle;
+        if (validator) {
+          bundle.entry.map(x => validator(x));
+        }
+        this.setState(newState);
+      });
+  }
+
+  refreshData() {
+    this.refreshResources('Group', 'groups');
+    this.refreshResources('Location', 'locations');
+    // NICE: examine the fetched data, logging a warning to DeveloperPanel if any look malformed
   }
 
   componentDidMount() {
-    this.refreshGroups();
-    // NICE: examine the fetched Groups, logging a warning to DeveloperPanel if any look malformed
+    this.refreshData();
   }
 
   componentDidUpdate() {
+    // Refresh ALL the cached data when the server component has changed.
     if (this.state.serverRoot !== this.props.serverRootURL) {
-      this.refreshGroups();
+      this.refreshData();
+      this.setState({ serverRoot: this.props.serverRootURL });
     }
   }
 
-  // TODO: componentize the remaining UI objects (Filters, Lists, Header)
-  // TODO: replace this panel with a blueprint component
   render() {
     const bundle = this.state.groups;
+    // TODO: group the characteristics selections into one function.
     const locations = getRefsFrom(bundle, 'at-location');
     // TODO: also collect Orgs and Docs from the ManagingEntity field (either should work).
     const orgs = getRefsFrom(bundle, 'attributed-to-organization');
     const docs = getRefsFrom(bundle, 'attributed-to-practitioner');
     //const careTeams = getRefsFrom(bundle, 'attributed-to-careteam');
-    // TODO: drop the this.state.groups bundle (since it might be big)?
     // TODO: get the component selections, saving them into an object.
-    const selections = {};
+    if (debug) {
+      console.log('render selections from', locations, orgs, docs);  // XXX
+    }
+    const selections = [];
 
-    // TODO: turn this into a NavBar: https://blueprintjs.com/docs/#core/components/navbar followed by a scrollable ListSelector
+    // NICE: turn this into a NavBar: https://blueprintjs.com/docs/#core/components/navbar followed by a scrollable ListSelector
     return (
       <>
         <div>Patient Lists</div>
-
-        <LocationSelector
-          locations={locations}
-        />
-        <ManagingEntity
-          organizations={orgs}
-          practitioners={docs}
-        />
         <ListSelector
-          lists={getSelectedLists(bundle, selections)}
+          lists={filterLists(bundle, selections)}
         />
       </>
     );

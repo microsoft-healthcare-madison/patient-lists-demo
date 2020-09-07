@@ -62,5 +62,8 @@ export async function drain(resourceUrl, progressCallback) {
 // Returns a list of resources from a bundle based on in-app selections.
 export function filterLists(bundle, selections) {
   // TODO: filter the bundle resources using the selections.
+  if (selections.length) {
+    console.warn('Not Implemented yet: api.filterLists', selections);  // XXX
+  }
   return bundle.entry;
 }
