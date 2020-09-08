@@ -34,7 +34,7 @@ export function Resource(props) {
           {
             props.getHoverData(resource).map(([attribute, value]) => {
               return (
-                <tr key={reference}>
+                <tr key={`${reference}.${attribute}`}>
                   <td style={{fontWeight: 'bold'}}>{attribute}</td>
                   <td>{value}</td>
                 </tr>
