@@ -69,7 +69,7 @@ class ListsPanel extends React.Component {
         const newState = {};
         newState[stateLocation] = bundle;
         if (validator) {
-          bundle.entry.map(x => validator(x));
+          bundle.entry.map(x => validator(resourceType, x));
         }
         this.setState(newState);
       });
@@ -119,9 +119,9 @@ class ListsPanel extends React.Component {
     // NICE: turn this into a NavBar: https://blueprintjs.com/docs/#core/components/navbar followed by a scrollable ListSelector
     return (
       <>
-        <div>Patient Lists</div>
+        <div>Patient Lists ({this.state.groups.length})</div>
         <div
-          style={{'overflow-y': 'scroll'}}
+          style={{'overflowY': 'scroll'}}
         >
           <ListSelector
             lists={filterLists(bundle, selections)}
