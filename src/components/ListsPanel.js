@@ -120,9 +120,13 @@ class ListsPanel extends React.Component {
     return (
       <>
         <div>Patient Lists</div>
-        <ListSelector
-          lists={filterLists(bundle, selections)}
-        />
+        <div
+          style={{'overflow-y': 'scroll'}}
+        >
+          <ListSelector
+            lists={filterLists(bundle, selections)}
+          />
+        </div>
       </>
     );
   }
