@@ -16,7 +16,6 @@
   
   NICE
     [ ] hover-text shows extra details in a *focusable* pop-up panel
-    [ ] provide a link to the server resource page
 */
 import React from 'react'
 import { Tooltip } from "@blueprintjs/core";
@@ -45,6 +44,7 @@ export function Resource(props) {
       </table>
     );
   }
+  // TODO: figure out how to enable the tool-top to be focused when hovered-over.
   return (
     <Tooltip
       content={hoverContent}
