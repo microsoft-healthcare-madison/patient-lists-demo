@@ -9,7 +9,7 @@
         "id": "0",
         "actual": true,
         "type": "person",
-        "name": "Empty 1"
+        "name": "Empty #1"
       },
       "request": {
         "method": "POST",
@@ -23,7 +23,7 @@
         "id": "1",
         "actual": true,
         "type": "animal",
-        "name": "Empty 2"
+        "name": "Empty #2"
       },
       "request": {
         "method": "POST",
@@ -37,7 +37,7 @@
         "id": "2",
         "actual": true,
         "type": "person",
-        "name": "Organization Managed 1",
+        "name": "Organization Managed #1",
         "managingEntity": {
           "reference": "Organization/3"
         },
@@ -59,14 +59,20 @@
         "id": "3",
         "actual": true,
         "type": "person",
-        "name": "Practitioner Managed 1",
+        "name": "Practitioner Managed #1",
         "managingEntity": {
           "reference": "Practitioner/4"
         },
-        "member": [ {
-          "entity": {
-            "reference": "Patient/1"
-          }
+        "member": [
+          {
+            "entity": {
+              "reference": "Patient/1"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient/227"
+            }
         } ]
       },
       "request": {
@@ -96,6 +102,36 @@
         "member": [ {
           "entity": {
             "reference": "Patient/1"
+          }
+        } ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    },
+    {
+      "fullUrl": "http://localhost:8080/hapi-fhir-jpaserver/fhir/Group/5",
+      "resource": {
+        "resourceType": "Group",
+        "id": "5",
+        "actual": true,
+        "type": "person",
+        "name": "attributed-to-care-team",
+        "characteristic": [ {
+          "code": {
+            "coding": [ {
+              "system": "http://argonautproject.org/patient-lists/CodeSystem/characteristics",
+              "code": "at-location"
+            } ]
+          },
+          "valueReference": {
+            "reference": "Location/2"
+          }
+        } ],
+        "member": [ {
+          "entity": {
+            "reference": "Patient/227"
           }
         } ]
       },

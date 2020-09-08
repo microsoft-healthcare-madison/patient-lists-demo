@@ -4,6 +4,7 @@
 #
 
 set -e
+set -m
 set -u
 
 PORT="${PORT:-8080}"
@@ -30,4 +31,5 @@ echo "Loading example data..."
 echo 'DONE!'
 
 echo "Press Ctrl-C to close the server process..."
-wait
+echo
+fg
