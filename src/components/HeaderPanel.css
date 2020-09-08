@@ -2,21 +2,17 @@
   font-size: 180%;
 }
 
-input[type=text] {
-  width: 500px;
-  font-size: 80%;
-  min-height: 26px;
-  padding: 4px;
-}
-
-input[type=submit] {
-  font-size: 80%;
-  padding: 4px;
-  background: #FFCAFE;
-  border-radius: 5px;
+.bp3-button {
+  float: right;
 }
 
 .server {
   float: right;
   line-height: 100%;
+}
+
+.url {
+  font-size: 80%;
+  min-height: 26px;
+  width: 90%;
 }

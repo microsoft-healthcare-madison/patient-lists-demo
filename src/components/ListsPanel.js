@@ -42,6 +42,8 @@ class ListsPanel extends React.Component {
       groups: { entry: []},
       locations: [],
       serverRoot: props.serverRootURL,
+      tagCode: props.tagCode,
+      tagSystem: props.tagSystem,
     };
   }
 
@@ -50,8 +52,18 @@ class ListsPanel extends React.Component {
     console.log(`Loaded ${loaded} of ${total} ${resourceType} records`);  // XXX
   }
 
+  // Returns a URL to refresh an optionally tagged resource type.
+  getRefreshQueryUrl(resourceType) {
+    const tag = encodeURI(
+      this.props.tagSystem && this.props.tagCode
+        ? `?_tag=${this.props.tagSystem}|${this.props.tagCode}`
+        : ''
+    );
+    return `${this.props.serverRootURL}/${resourceType}${tag}`;
+  }
+
   refreshResources(resourceType, stateLocation, validator) {
-    const url = `${this.props.serverRootURL}/${resourceType}`;
+    const url = this.getRefreshQueryUrl(resourceType);
     drain(url, (x, total) => { this.progressCallback(resourceType, x, total); })
       .then((bundle) => {
         const newState = {};
@@ -75,9 +87,18 @@ class ListsPanel extends React.Component {
 
   componentDidUpdate() {
     // Refresh ALL the cached data when the server component has changed.
-    if (this.state.serverRoot !== this.props.serverRootURL) {
+    const needsRefresh =
+      (this.state.serverRoot !== this.props.serverRootURL) ||
+      (this.state.tagCode !== this.props.tagCode) ||
+      (this.state.tagSystem !== this.props.tagSystem);
+
+    if (needsRefresh) {
       this.refreshData();
-      this.setState({ serverRoot: this.props.serverRootURL });
+      this.setState({
+        serverRoot: this.props.serverRootURL,
+        tagCode: this.props.tagCode,
+        tagSystem: this.props.tagSystem,
+      });
     }
   }
 
@@ -88,10 +109,10 @@ class ListsPanel extends React.Component {
     // TODO: also collect Orgs and Docs from the ManagingEntity field (either should work).
     const orgs = getRefsFrom(bundle, 'attributed-to-organization');
     const docs = getRefsFrom(bundle, 'attributed-to-practitioner');
-    //const careTeams = getRefsFrom(bundle, 'attributed-to-careteam');
+    const careTeams = getRefsFrom(bundle, 'attributed-to-careteam');
     // TODO: get the component selections, saving them into an object.
     if (debug) {
-      console.log('render selections from', locations, orgs, docs);  // XXX
+      console.log('render selections from', locations, orgs, docs, careTeams);  // XXX
     }
     const selections = [];
 

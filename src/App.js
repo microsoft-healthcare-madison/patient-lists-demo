@@ -7,8 +7,8 @@ import patientsPanel from 'components/PatientsPanel';
 
 import './App.css';
 import "normalize.css";
-import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/select/lib/css/blueprint-select.css';
 
 // TODO: update this with the public-facing URL, when it's available.
@@ -16,6 +16,8 @@ const defaultServerRootURL = "http://localhost:8080/hapi-fhir-jpaserver/fhir/";
 //const defaultServerRootURL = 'http://hapi.fhir.org/baseR4/';
 
 function App() {
+  const [tagSystem, setTagSystem] = useState('');  // TODO: add a default
+  const [tagCode, setTagCode] = useState('');  // TODO: add a default
   const [serverRootURL, setServerRootURL] = useState(defaultServerRootURL);
   const [developerMessages, setDeveloperMessages] = useState([]);
 
@@ -35,6 +37,10 @@ function App() {
             serverRootURL={serverRootURL}
             setDeveloperMessages={setDeveloperMessages}
             setServerRootURL={setServerRootURL}
+            setTagCode={setTagCode}
+            setTagSystem={setTagSystem}
+            tagCode={tagCode}
+            tagSystem={tagSystem}
           /></div>
       </div>
 
@@ -44,6 +50,8 @@ function App() {
             developerMessages={developerMessages}
             serverRootURL={serverRootURL}
             setDeveloperMessages={setDeveloperMessages}
+            tagCode={tagCode}
+            tagSystem={tagSystem}
           />
         </div>
         <div className="center">{patientsPanel}</div>

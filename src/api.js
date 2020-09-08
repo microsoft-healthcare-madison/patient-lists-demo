@@ -1,6 +1,10 @@
 // TODO: consider renaming this file
 
 export const codeSystem = "http://argonautproject.org/patient-lists/CodeSystem/characteristics";
+export const demoTag = {
+  system: 'http://connectathon.fhir.org/',
+  code: '2020-sep',
+};
 
 
 // Returns the non-empty resources from a bundle.
@@ -39,6 +43,7 @@ export async function drain(resourceUrl, progressCallback) {
       .then(response => response.json())
       .then(bundle => bundles.push(bundle));
     const newBundle = bundles.pop();
+    if (!newBundle.entry) { newBundle.entry = []; }
 
     // If the search was paginated, prepare to fetch the following bundle.
     const next = newBundle.link.filter(x => x.relation === 'next');
@@ -52,7 +57,7 @@ export async function drain(resourceUrl, progressCallback) {
     }
 
     // Inform the caller of the current progress via callback, if defined.
-    if (progressCallback) {
+    if (progressCallback && bundles.length && bundles[0].entry) {
       progressCallback(bundles[0].entry.length, bundles[0].total);
     }
   } while (url);
@@ -61,11 +66,18 @@ export async function drain(resourceUrl, progressCallback) {
 
 // Returns a list of resources from a bundle based on in-app selections.
 export function filterLists(bundle, selections) {
-  // TODO: filter the bundle resources using the selections.
+  // Shallow-copy the list.
+  const lists = [...bundle.entry];
+
+  // TODO: apply the filter by removing lists that match no selections.
   if (selections.length) {
     console.warn('Not Implemented yet: api.filterLists', selections);  // XXX
   }
-  return [...bundle.entry].sort((a, b) => {
-    return a.resource.name.localeCompare(b.resource.name);
+
+  // Sort the remaining lists by name.
+  return lists.sort((a, b) => {
+    const left = a.resource.name || '';
+    const right = b.resource.name || '';
+    return left.localeCompare(right);
   });
 }
