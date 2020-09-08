@@ -4,10 +4,20 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// Returns a DemoApp either in strict or 'normal' mode.
+function DemoApp(props) {
+  if (props.strict) {
+    return (
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    );
+  }
+  return <App />;
+}
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <DemoApp strict={false} />,
   document.getElementById('root')
 );
 
