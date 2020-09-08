@@ -23,7 +23,8 @@ import { Tooltip } from "@blueprintjs/core";
 
 export function Resource(props) {
   const resource = props.resource;
-  const display = props.display || `${resource.resourceType}/${resource.id}`;
+  const reference = `${resource.resourceType}/${resource.id}`
+  const display = props.display || reference;
   const disabled = props.getHoverData ? false : true;
   let hoverContent = <div/>;  // placeholder
   if (props.getHoverData) {
@@ -33,7 +34,7 @@ export function Resource(props) {
           {
             props.getHoverData(resource).map(([attribute, value]) => {
               return (
-                <tr>
+                <tr key={reference}>
                   <td style={{fontWeight: 'bold'}}>{attribute}</td>
                   <td>{value}</td>
                 </tr>
@@ -45,8 +46,16 @@ export function Resource(props) {
     );
   }
   return (
-    <Tooltip content={hoverContent} disabled={disabled}>
-      <div>{display}</div>
+    <Tooltip
+      content={hoverContent}
+      disabled={disabled}
+      transitionDuration={10}
+      intent="primary"
+      boundary="viewport"
+      hoverCloseDelay={200}
+      enforceFocus={false}
+    >
+      <span>{display}</span>
     </Tooltip>
   );
 }
