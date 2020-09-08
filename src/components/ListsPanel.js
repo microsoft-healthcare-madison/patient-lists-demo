@@ -18,8 +18,15 @@ function ResourceRow(props) {
             display={resource.name}
             resource={resource}
             getHoverData={(resource) => {
+              const reference = `${resource.resourceType}/${resource.id}`;
+              const href = encodeURI(`${props.serverRootURL}/${reference}`);
+              const link = (
+                <a href={href} rel="noopener noreferrer" target="_blank">
+                  {reference}
+                </a>
+              );
               return [
-                ['reference', `${resource.resourceType}/${resource.id}`],
+                ['reference', link],
                 ['actual', resource.actual ? 'true' : 'false'],
                 ['type', resource.type],
                 // TODO: add any other relevant hover-text fields here.
@@ -41,7 +48,10 @@ function ListSelector(props) {
     <table>
       <tbody>{
         props.lists.map((x) => {
-          return ResourceRow({ resource: x.resource })
+          return ResourceRow({
+            resource: x.resource,
+            serverRootURL: props.serverRootURL
+          });
         })
       }</tbody>
     </table>
@@ -142,6 +152,7 @@ class ListsPanel extends React.Component {
         >
           <ListSelector
             lists={filterLists(bundle, selections)}
+            serverRootURL={this.props.serverRootURL}
           />
         </div>
       </>

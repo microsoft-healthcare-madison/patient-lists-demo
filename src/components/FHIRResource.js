@@ -15,7 +15,7 @@
     />
   
   NICE
-    [ ] hover-text shows extra details in a focusable pop-up panel
+    [ ] hover-text shows extra details in a *focusable* pop-up panel
     [ ] provide a link to the server resource page
 */
 import React from 'react'
@@ -26,7 +26,7 @@ export function Resource(props) {
   const reference = `${resource.resourceType}/${resource.id}`
   const display = props.display || reference;
   const disabled = props.getHoverData ? false : true;
-  let hoverContent = <div/>;  // placeholder
+  let hoverContent = <table/>;  // placeholder
   if (props.getHoverData) {
     hoverContent = (
       <table>
@@ -49,10 +49,10 @@ export function Resource(props) {
     <Tooltip
       content={hoverContent}
       disabled={disabled}
-      transitionDuration={10}
+      transitionDuration={100}
       intent="primary"
       boundary="viewport"
-      hoverCloseDelay={200}
+      hoverCloseDelay={1000}
       enforceFocus={false}
     >
       <span>{display}</span>
