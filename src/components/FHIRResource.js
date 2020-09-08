@@ -9,10 +9,12 @@
     />
   
   TODO
-    [ ] define the class by how it's used elsewhere first.
+    [ ] use a blueprint Tooltip to display hover details:
+        https://blueprintjs.com/docs/#core/components/tooltip
 
   NICE
     [ ] hover-text shows extra details in a focusable pop-up panel
+    [ ] provide a link to the server resource page
 */
 import React from 'react'
 import { Checkbox } from "@blueprintjs/core";
