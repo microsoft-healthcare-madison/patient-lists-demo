@@ -10,12 +10,14 @@ function ResourceRow(props) {
   const resource = props.resource;
   const key = `${resource.resourceType}/${resource.id}`;
   return (
-    <tr key={key}><td>
-      <Resource
-        display={props.resource.name}
-        resource={props.resource}
-      />
-    </td></tr>
+    <tr key={key}>
+      <td>
+        <Resource
+          display={resource.name}
+          resource={resource}
+        />
+      </td>
+    </tr>
   );
 }
 
@@ -39,7 +41,7 @@ class ListsPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      groups: { entry: []},
+      groups: { entry: [] },
       locations: [],
       serverRoot: props.serverRootURL,
       tagCode: props.tagCode,
@@ -119,9 +121,13 @@ class ListsPanel extends React.Component {
     // NICE: turn this into a NavBar: https://blueprintjs.com/docs/#core/components/navbar followed by a scrollable ListSelector
     return (
       <>
-        <div>Patient Lists ({this.state.groups.length})</div>
         <div
-          style={{'overflowY': 'scroll'}}
+          style={{ fontWeight: 'bold' }}
+        >
+          Patient Lists ({this.state.groups.entry.length})
+        </div>
+        <div
+          style={{ overflowY: 'scroll' }}
         >
           <ListSelector
             lists={filterLists(bundle, selections)}
