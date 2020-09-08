@@ -5,58 +5,48 @@
   <Resource
     resource={resource}
     display={resource.name}
-    hover={['id', 'url', 'age', 'gender', 'DOB']}
+    getHoverData={(resource) => {
+      return [
+        ['id', resource.id],
+        ['url', resource.url],
+        ['name', resource.name],
+      ];
+    }}
     />
   
-  TODO
-    [ ] use a blueprint Tooltip to display hover details:
-        https://blueprintjs.com/docs/#core/components/tooltip
-
   NICE
     [ ] hover-text shows extra details in a focusable pop-up panel
     [ ] provide a link to the server resource page
 */
 import React from 'react'
-import { Checkbox } from "@blueprintjs/core";
+import { Tooltip } from "@blueprintjs/core";
 
-
-export class Resource extends React.Component {
-  constructor(props) {
-    super(props);
-    const resource = this.props.resource;
-    this.state = {
-      checked: false,
-      display: props.display || `${resource.resourceType}/${resource.id}`,
-      hover: props.hover || [],
-    }
-    this.onChange = this.onChange.bind(this);
-    this.onMouseOut = this.onMouseOut.bind(this);
-    this.onMouseOver = this.onMouseOver.bind(this);
-  }
-
-  // TODO: define how the displayed portion of the resource is shown, and what goes into the hover-text popup
-  render() {
-    return (
-      <div onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut}>
-        <Checkbox
-          label={this.state.display}
-          onChange={this.onChange}
-          onMouseOver={this.onMouseOver}
-        />
-      </div>
+export function Resource(props) {
+  const resource = props.resource;
+  const display = props.display || `${resource.resourceType}/${resource.id}`;
+  const disabled = props.getHoverData ? false : true;
+  let hoverContent = <div/>;  // placeholder
+  if (props.getHoverData) {
+    hoverContent = (
+      <table>
+        <tbody>
+          {
+            props.getHoverData(resource).map(([attribute, value]) => {
+              return (
+                <tr>
+                  <td style={{fontWeight: 'bold'}}>{attribute}</td>
+                  <td>{value}</td>
+                </tr>
+              );
+            })
+          }
+        </tbody>
+      </table>
     );
   }
-
-  onMouseOut() {
-    // TODO: hide details in a panel
-  }
-
-  onMouseOver() {
-    // TODO: display details in a panel
-  }
-
-  onChange(event) {
-    const checked = event.target.checked;
-    this.setState({ checked: checked });
-  }
+  return (
+    <Tooltip content={hoverContent} disabled={disabled}>
+      <div>{display}</div>
+    </Tooltip>
+  );
 }

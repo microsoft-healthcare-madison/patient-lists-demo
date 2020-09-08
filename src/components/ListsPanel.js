@@ -1,6 +1,7 @@
 import { drain, getRefsFrom, filterLists } from 'api';
 import React from 'react';
 import 'components/ListsPanel.css'
+import { Checkbox } from "@blueprintjs/core";
 import { Resource } from 'components/FHIRResource';
 
 const debug = false;  // XXX
@@ -12,10 +13,20 @@ function ResourceRow(props) {
   return (
     <tr key={key}>
       <td>
-        <Resource
-          display={resource.name}
-          resource={resource}
-        />
+        <Checkbox>
+          <Resource
+            display={resource.name}
+            resource={resource}
+            getHoverData={(resource) => {
+              return [
+                ['reference', `${resource.resourceType}/${resource.id}`],
+                ['actual', resource.actual ? 'true' : 'false'],
+                ['type', resource.type],
+                // TODO: add any other relevant hover-text fields here.
+              ];
+            }}
+          />
+        </Checkbox>
       </td>
     </tr>
   );
