@@ -33,6 +33,13 @@ export function getRefsFrom(bundle, code) {
   return [...locations].sort();
 }
 
+// NICE: When the results include resources of different types, there should be
+//       separate bundles per type.  So, if the first pages of bundles contain
+//       Group followed by pages of Patient bundles - the returned value should be
+//       a list of 2 bundles with all the Groups and Patients separated.
+
+// NICE: Don't return a Bundle.  Instead return a list of tuples: [[ResourceType, [resources]], ...]
+
 // Returns a de-paginated bundle of resources from an initial URL.
 export async function drain(resourceUrl, progressCallback) {
   const bundles = [];
@@ -65,9 +72,9 @@ export async function drain(resourceUrl, progressCallback) {
 }
 
 // Returns a list of resources from a bundle based on in-app selections.
-export function filterLists(bundle, selections) {
+export function filterLists(lists, selections) {
   // Shallow-copy the list.
-  const lists = [...bundle.entry];
+  const listsCopy = [...lists];
 
   // TODO: apply the filter by removing lists that match no selections.
   if (selections.length) {
@@ -75,7 +82,7 @@ export function filterLists(bundle, selections) {
   }
 
   // Sort the remaining lists by name.
-  return lists.sort((a, b) => {
+  return listsCopy.sort((a, b) => {
     const left = a.resource.name || '';
     const right = b.resource.name || '';
     return left.localeCompare(right);

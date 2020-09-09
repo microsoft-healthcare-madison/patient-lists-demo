@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import HeaderPanel from 'components/HeaderPanel';
 import ListsPanel from 'components/ListsPanel';
 import DeveloperPanel from 'components/DeveloperPanel';
-import attributesPanel from 'components/AttributesPanel';
-import patientsPanel from 'components/PatientsPanel';
+import PatientsPanel from 'components/PatientsPanel';
+import ExtraAttributesPanel from 'components/AttributesPanel';
 
 import './App.css';
 import "normalize.css";
@@ -16,10 +16,12 @@ const defaultServerRootURL = "http://localhost:8080/hapi-fhir-jpaserver/fhir/";
 //const defaultServerRootURL = 'http://hapi.fhir.org/baseR4/';
 
 function App() {
+  const [developerMessages, setDeveloperMessages] = useState([]);
+  const [extraAttributeGetters, setExtraAttributeGetters] = useState([]);
+  const [patients, setPatients] = useState([]);
+  const [serverRootURL, setServerRootURL] = useState(defaultServerRootURL);
   const [tagSystem, setTagSystem] = useState('');  // TODO: add a default
   const [tagCode, setTagCode] = useState('');  // TODO: add a default
-  const [serverRootURL, setServerRootURL] = useState(defaultServerRootURL);
-  const [developerMessages, setDeveloperMessages] = useState([]);
 
   React.useEffect(() => {
     const message = (
@@ -50,12 +52,24 @@ function App() {
             developerMessages={developerMessages}
             serverRootURL={serverRootURL}
             setDeveloperMessages={setDeveloperMessages}
+            setPatients={setPatients}
             tagCode={tagCode}
             tagSystem={tagSystem}
           />
         </div>
-        <div className="center">{patientsPanel}</div>
-        <div className="right">{attributesPanel}</div>
+        <div className="center">
+          <PatientsPanel
+            extraAttributeGetters={extraAttributeGetters}
+            patients={patients}
+            setDeveloperMessages={setDeveloperMessages}
+          />
+        </div>
+        <div className="right">
+          <ExtraAttributesPanel
+            extraAttributeGetters={extraAttributeGetters}
+            setExtraAttributeGetters={setExtraAttributeGetters}
+          />
+        </div>
       </div>
 
       <div className="row">

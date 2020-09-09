@@ -13,7 +13,10 @@ function ResourceRow(props) {
   return (
     <tr key={key}>
       <td>
-        <Checkbox>
+        <Checkbox
+          onChange={(event) => props.handleListSelection(resource, event.target.checked)}
+          checked={props.isChecked}
+        >
           <Resource
             display={resource.name}
             resource={resource}
@@ -21,7 +24,7 @@ function ResourceRow(props) {
               const reference = `${resource.resourceType}/${resource.id}`;
               const href = encodeURI(`${props.serverRootURL}/${reference}`);
               const link = (
-                <a href={href} rel="noopener noreferrer" target="_blank">
+                <a href={href} style={{color: 'yellow'}} rel="noopener noreferrer" target="_blank">
                   {reference}
                 </a>
               );
@@ -29,6 +32,7 @@ function ResourceRow(props) {
                 ['reference', link],
                 ['actual', resource.actual ? 'true' : 'false'],
                 ['type', resource.type],
+                ['members', resource.member ? resource.member.length : 0],
                 // TODO: add any other relevant hover-text fields here.
               ];
             }}
@@ -39,7 +43,7 @@ function ResourceRow(props) {
   );
 }
 
-// A list of patient lists, pre-filtered by the current filter selection.
+// A sorted list of patient lists, pre-filtered by the current filter selection.
 function ListSelector(props) {
   if (!props.lists) {
     return <></>;
@@ -49,8 +53,9 @@ function ListSelector(props) {
       <tbody>{
         props.lists.map((x) => {
           return ResourceRow({
+            handleListSelection: props.handleListSelection,
             resource: x.resource,
-            serverRootURL: props.serverRootURL
+            serverRootURL: props.serverRootURL,
           });
         })
       }</tbody>
@@ -58,16 +63,20 @@ function ListSelector(props) {
   );
 }
 
+// A panel of selectable patient lists with optional filters.
 class ListsPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      groups: { entry: [] },
+      groups: [],
+      groupsIncluded: [],
       locations: [],
+      locationsIncluded: [],
       serverRoot: props.serverRootURL,
       tagCode: props.tagCode,
       tagSystem: props.tagSystem,
     };
+    this.handleListSelection = this.handleListSelection.bind(this);
   }
 
   // NICE: update something on-screen while data is loading.
@@ -76,30 +85,39 @@ class ListsPanel extends React.Component {
   }
 
   // Returns a URL to refresh an optionally tagged resource type.
-  getRefreshQueryUrl(resourceType) {
-    const tag = encodeURI(
-      this.props.tagSystem && this.props.tagCode
-        ? `?_tag=${this.props.tagSystem}|${this.props.tagCode}`
-        : ''
-    );
-    return `${this.props.serverRootURL}/${resourceType}${tag}`;
+  getRefreshQueryUrl(resourceType, includes) {
+    const params = [];
+    if (this.props.tagSystem && this.props.tagCode) {
+      params.push(['_tag', `${this.props.tagSystem}|${this.props.tagCode}`]);
+    }
+    if (includes && includes.length) {
+      params.push(...includes.map(x => ['_include', x]));
+    }
+    const encodedParamString = params
+      .map(kv => kv.map(encodeURIComponent).join("="))
+      .join("&");
+    const query = encodedParamString ? `?${encodedParamString}` : '';
+    return `${this.props.serverRootURL}/${resourceType}${query}`;
   }
 
-  refreshResources(resourceType, stateLocation, validator) {
-    const url = this.getRefreshQueryUrl(resourceType);
+  refreshResources(resourceType, stateLocation, includes, validator) {
+    const url = this.getRefreshQueryUrl(resourceType, includes);
     drain(url, (x, total) => { this.progressCallback(resourceType, x, total); })
       .then((bundle) => {
         const newState = {};
-        newState[stateLocation] = bundle;
+        const resources = bundle.entry.filter(e => e.resource.resourceType === resourceType);
+        const included = bundle.entry.filter(e => e.resource.resourceType !== resourceType);
+        newState[stateLocation] = resources;
+        newState[`${stateLocation}Included`] = included;
         if (validator) {
-          bundle.entry.map(x => validator(resourceType, x));
+          resources.map(x => validator(resourceType, x));
         }
         this.setState(newState);
       });
   }
 
   refreshData() {
-    this.refreshResources('Group', 'groups');
+    this.refreshResources('Group', 'groups', ['Group:member']);
     this.refreshResources('Location', 'locations');
     // NICE: examine the fetched data, logging a warning to DeveloperPanel if any look malformed
   }
@@ -125,15 +143,37 @@ class ListsPanel extends React.Component {
     }
   }
 
+  // BUG: This is misleading.  The UI suggests that any number of lists can be selected, but this
+  //      code only allows one at a time.  Unselecting a list empties the patient panel.
+  //      A better way is described below, but this will have to do for now.
+  handleListSelection(resource, checked) {
+    const listRef = `${resource.resourceType}/${resource.id}`;
+    console.log(`${listRef} ${checked ? 'checked' : 'un-checked'}`);  // XXX
+    // TODO: map the resource member references to the lists that are selected.
+    //       Remove members from lists that are un-selected.
+    //       Afterward, any members that are included in visible lists should appear in the
+    //       Patients panel.
+    if (!checked) {
+      this.props.setPatients([]);
+      return;
+    }
+    const patientRefs = new Set(resource.member.map(m => m.entity.reference));
+    const patients = this.state.groupsIncluded
+      .map(x => x.resource)
+      .filter(r => patientRefs.has(`${r.resourceType}/${r.id}`)
+    );
+    this.props.setPatients(patients);
+  }
+
   render() {
-    const bundle = this.state.groups;
+    const lists = this.state.groups;
     // TODO: group the characteristics selections into one function.
-    const locations = getRefsFrom(bundle, 'at-location');
-    // TODO: also collect Orgs and Docs from the ManagingEntity field (either should work).
-    const orgs = getRefsFrom(bundle, 'attributed-to-organization');
-    const docs = getRefsFrom(bundle, 'attributed-to-practitioner');
-    const careTeams = getRefsFrom(bundle, 'attributed-to-careteam');
+    const locations = getRefsFrom(lists, 'at-location');
+    const orgs = getRefsFrom(lists, 'attributed-to-organization');
+    const docs = getRefsFrom(lists, 'attributed-to-practitioner');
+    const careTeams = getRefsFrom(lists, 'attributed-to-careteam');
     // TODO: get the component selections, saving them into an object.
+    // TODO: also collect Orgs and Docs from the ManagingEntity field (either should work).
     if (debug) {
       console.log('render selections from', locations, orgs, docs, careTeams);  // XXX
     }
@@ -142,16 +182,13 @@ class ListsPanel extends React.Component {
     // NICE: turn this into a NavBar: https://blueprintjs.com/docs/#core/components/navbar followed by a scrollable ListSelector
     return (
       <>
-        <div
-          style={{ fontWeight: 'bold' }}
-        >
-          Patient Lists ({this.state.groups.entry.length})
+        <div style={{ fontWeight: 'bold' }} >
+          Patient Lists ({this.state.groups.length})
         </div>
-        <div
-          style={{ overflowY: 'scroll' }}
-        >
+        <div style={{ overflowY: 'scroll' }} >
           <ListSelector
-            lists={filterLists(bundle, selections)}
+            handleListSelection={this.handleListSelection}
+            lists={filterLists(lists, selections)}
             serverRootURL={this.props.serverRootURL}
           />
         </div>
