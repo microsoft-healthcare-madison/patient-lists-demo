@@ -45,6 +45,7 @@ function ResourceRow(props) {
 
 // A sorted list of patient lists, pre-filtered by the current filter selection.
 function ListSelector(props) {
+  // TODO: pull this up to the main panel.
   const [selectedList, setSelectedList] = React.useState();
   if (!props.lists) {
     return <></>;
@@ -133,6 +134,7 @@ class ListsPanel extends React.Component {
 
   refreshData() {
     this.props.setPatients([]);
+    //this.props.setSelectedList(undefined);
     this.refreshResources('Group', 'groups', ['Group:member']);
     this.refreshResources('Location', 'locations');
     // NICE: examine the fetched data, logging a warning to DeveloperPanel if any look malformed
@@ -216,6 +218,9 @@ class ListsPanel extends React.Component {
       console.log('render selections from', locations, orgs, docs, careTeams);  // XXX
     }
     const selections = [];
+
+    // TODO: pass in a hook state for the selectedList and a setter.  This will allow a data refresh to
+    //       un-select the current selected list (which would be needed when changing servers).
 
     // NICE: turn this into a NavBar: https://blueprintjs.com/docs/#core/components/navbar followed by a scrollable ListSelector
     return (
