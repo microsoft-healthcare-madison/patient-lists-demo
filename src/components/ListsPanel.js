@@ -1,6 +1,6 @@
 import { drain, getRefsFrom, filterLists } from 'api';
 import React from 'react';
-import { Checkbox, HTMLTable } from "@blueprintjs/core";
+import { Radio, RadioGroup } from "@blueprintjs/core";
 import { Resource } from 'components/FHIRResource';
 
 const debug = false;  // XXX
@@ -13,46 +13,57 @@ function ResourceRow(props) {
   const resource = props.resource;
   const key = `${resource.resourceType}/${resource.id}`;
   return (
-    <tr key={key}>
-      <td>
-        <Checkbox
-          onChange={(event) => props.handleListSelection(resource, event.target.checked)}
-          checked={props.isChecked}
-        >
-          <Resource
-            display={resource.name}
-            resource={resource}
-            getHoverData={(resource) => {
-              const reference = `${resource.resourceType}/${resource.id}`;
-              const href = encodeURI(`${props.serverRootURL}/${reference}`);
-              const link = (
-                <a href={href} style={{color: 'yellow'}} rel="noopener noreferrer" target="_blank">
-                  {reference}
-                </a>
-              );
-              return [
-                ['reference', link],
-                ['actual', resource.actual ? 'true' : 'false'],
-                ['type', resource.type],
-                ['members', resource.member ? resource.member.length : 0],
-                // TODO: add any other relevant hover-text fields here.
-              ];
-            }}
-          />
-        </Checkbox>
-      </td>
-    </tr>
+    <Radio
+      key={key}
+      value={key}
+    >
+      <Resource
+        display={resource.name}
+        resource={resource}
+        getHoverData={(resource) => {
+          return [
+            ['reference', (
+              <a
+                href={encodeURI(`${props.serverRootURL}/${key}`)}
+                style={{color: 'yellow'}}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {key}
+              </a>
+            )],
+            ['actual', resource.actual ? 'true' : 'false'],
+            ['type', resource.type],
+            ['members', resource.member ? resource.member.length : 0],
+            // TODO: add any other relevant hover-text fields here.
+          ];
+        }}
+      />
+    </Radio>
   );
 }
 
 // A sorted list of patient lists, pre-filtered by the current filter selection.
 function ListSelector(props) {
+  const [selectedList, setSelectedList] = React.useState();
   if (!props.lists) {
     return <></>;
   }
+
+  function getList(reference) {
+    return props.lists.filter(
+      (x) => `Group/${x.resource.id}` === reference
+    )[0];
+  }
+
   return (
-    <HTMLTable condensed={true}>
-      <tbody>{
+    <RadioGroup
+      onChange={(e) => {
+        setSelectedList(e.target.value);
+        props.handleListSelection(getList(e.target.value).resource);
+      }}
+      selectedValue={selectedList}
+    >{
         props.lists.map((x) => {
           return ResourceRow({
             handleListSelection: props.handleListSelection,
@@ -60,8 +71,8 @@ function ListSelector(props) {
             serverRootURL: props.serverRootURL,
           });
         })
-      }</tbody>
-    </HTMLTable>
+      }
+    </RadioGroup>
   );
 }
 
@@ -182,15 +193,8 @@ class ListsPanel extends React.Component {
     );
   }
 
-  // BUG: This is misleading.  The UI suggests that any number of lists can be selected, but this
-  //      code only allows one at a time.  Unselecting a list empties the patient panel.
-  //      A better way is described below, but this will have to do for now.
-  handleListSelection(resource, checked) {
-    // TODO: map the resource member references to the lists that are selected.
-    //       Remove members from lists that are un-selected.
-    //       Afterward, any members that are included in visible lists should appear in the
-    //       Patients panel.
-    if (!checked || !resource.member) {
+  handleListSelection(resource) {
+    if (!resource.member) {
       this.props.setPatients([]);
     } else {
       this.props.setPatients(

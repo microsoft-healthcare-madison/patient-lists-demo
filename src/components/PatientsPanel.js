@@ -2,7 +2,6 @@ import React from 'react';
 import 'components/PatientsPanel.css'
 import { HTMLTable } from '@blueprintjs/core';
 
-// TODO: use a blueprint HTMLTable of data for this panel
 // TODO: decide how to enable the on-hover data for patients, just like in the lists panel
 
 function getRow(patient, attributeGetters) {
