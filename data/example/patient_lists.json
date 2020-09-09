@@ -87,7 +87,7 @@
         "id": "4",
         "actual": true,
         "type": "person",
-        "name": "At-Location",
+        "name": "Location-based",
         "characteristic": [ {
           "code": {
             "coding": [ {
