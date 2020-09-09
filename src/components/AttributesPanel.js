@@ -2,8 +2,6 @@ import React from 'react';
 import 'components/AttributesPanel.css'
 import { Checkbox, HTMLTable } from '@blueprintjs/core';
 
-const debug = false;  // XXX
-
 // NICE: reveal this panel by clicking a Button.
 
 function getConditions(patient) {
