@@ -6,6 +6,9 @@ import { Resource } from 'components/FHIRResource';
 
 const debug = false;  // XXX
 
+// TODO: move this to a FHIRGroup module?
+// TODO: create a src.components.fhir folder?
+
 // A FHIR Resource in a table row.
 function ResourceRow(props) {
   const resource = props.resource;
@@ -81,10 +84,12 @@ class ListsPanel extends React.Component {
 
   // NICE: update something on-screen while data is loading.
   progressCallback(resourceType, loaded, total) {
-    console.log(`Loaded ${loaded} of ${total} ${resourceType} records`);  // XXX
+    if (debug) {
+      console.log(`Loaded ${loaded} of ${total} ${resourceType} records`);
+    }
   }
 
-  // Returns a URL to refresh an optionally tagged resource type.
+  // Returns a URL to refresh an optionally tagged resource type which may _include other types.
   getRefreshQueryUrl(resourceType, includes) {
     const params = [];
     if (this.props.tagSystem && this.props.tagCode) {
@@ -143,26 +148,55 @@ class ListsPanel extends React.Component {
     }
   }
 
+  // BUG: This app assumes that a Group's member.entity contains a 'reference' to a patient.
+  //      The 'reference' member.entity attribute is technically optional - there are other
+  //      ways to represent a reference to a list member.
+  //      Maybe a validator can log a warning about that earlier in the UI when encountered
+  //      (and fail gracefully).
+
+  // TODO: move this logic to the api.js module, since it has nothing to do with rendering and
+  //       everything to do with the new API.
+
+  // TODO: include the FHIR server root URL in case it's needed to fetch a patient that's not
+  //       in the cache already.
+
+  // Returns the complete list of Patient resources who are members of a list.
+  resolvePatients(list, cachedPatients) {
+
+    // Returns the reference for a list member from the list.member fragment.
+    function getReference(member) {
+      if (member && member.entity) {
+        return member.entity.reference;
+      }
+      console.log('resolvePatients.getReference: unknown reference type in:', list);
+    }
+
+    const members = list.member ? list.member : [];
+    const memberRefs = new Set(members.map(getReference).filter(x => x));
+
+    // NICE: if the member is not in the cache, log a warning somewhere, or maybe fetch it.
+
+    return cachedPatients
+      .map(x => x.resource)
+      .filter(r => memberRefs.has(`${r.resourceType}/${r.id}`)
+    );
+  }
+
   // BUG: This is misleading.  The UI suggests that any number of lists can be selected, but this
   //      code only allows one at a time.  Unselecting a list empties the patient panel.
   //      A better way is described below, but this will have to do for now.
   handleListSelection(resource, checked) {
-    const listRef = `${resource.resourceType}/${resource.id}`;
-    console.log(`${listRef} ${checked ? 'checked' : 'un-checked'}`);  // XXX
     // TODO: map the resource member references to the lists that are selected.
     //       Remove members from lists that are un-selected.
     //       Afterward, any members that are included in visible lists should appear in the
     //       Patients panel.
     if (!checked || !resource.member) {
       this.props.setPatients([]);
-      return;
+    } else {
+      this.props.setPatients(
+        this.resolvePatients(resource, this.state.groupsIncluded)
+      );
     }
-    const patientRefs = new Set(resource.member.map(m => m.entity.reference));
-    const patients = this.state.groupsIncluded
-      .map(x => x.resource)
-      .filter(r => patientRefs.has(`${r.resourceType}/${r.id}`)
-    );
-    this.props.setPatients(patients);
   }
 
   render() {
