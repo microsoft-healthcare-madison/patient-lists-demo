@@ -1,5 +1,6 @@
 import React from 'react';
 import 'components/PatientsPanel.css'
+import { HTMLTable } from '@blueprintjs/core';
 
 // TODO: use a blueprint HTMLTable of data for this panel
 // TODO: decide how to enable the on-hover data for patients, just like in the lists panel
@@ -13,12 +14,14 @@ function getData(patients, attributeGetters) {
 }
 
 function getName(patient) {
-  const officialNames = patient.name.filter(name => name.use === 'official');
-  if (officialNames.length) {
-    const name = officialNames[0];
-    const names = name.given.map(fn => `${fn} ${name.family}`);
-    if (names.length) {
-      return names[0];
+  if (patient && patient.name) {
+    const officialNames = patient.name.filter(name => name.use === 'official');
+    if (officialNames.length) {
+      const name = officialNames[0];
+      const names = name.given.map(fn => `${fn} ${name.family}`);
+      if (names.length) {
+        return names[0].replace(/[0-9]/g, '');
+      }
     }
   }
   return 'J. Doe';
@@ -37,22 +40,29 @@ const patientAttributeGetters = [
 ];
 
 export default function PatientsPanel(props) {
-  console.log('PatientsPanel', props);  // XXX
   const getters = [...patientAttributeGetters, ...props.extraAttributeGetters];
   const columns = getters.map(x => x[0]);
-  console.log('GOT DATA', columns, getters, getData(props.patients, getters));  // XXX
   return (
     <>
       <div style={{ fontWeight: 'bold' }} >
         Patients ({props.patients.length} selected)
       </div>
-      <div style={{ overflowY: 'scroll' }} >
-        <table>
+      <span style={{ overflowY: 'scroll' }} >
+        <HTMLTable condensed={true} interactive={true}>
+          <thead>
+            <tr key="patientsPanelHeaders">{columns.slice(1).map(x =>
+              <th key={x}>{x}</th>
+            )}</tr>
+          </thead>
           <tbody>
-            <tr><td>HI</td></tr>
+            {getData(props.patients, getters).map(row =>
+              <tr key={`patientsPanelPatient/${row[0]}`}>{row.slice(1).map((col, i) =>
+                <td key={`Patient/${row[0]}/${i}`}>{col}</td>
+              )}</tr>
+            )}
           </tbody>
-        </table>
-      </div>
+        </HTMLTable>
+      </span>
     </>
   );
 }
