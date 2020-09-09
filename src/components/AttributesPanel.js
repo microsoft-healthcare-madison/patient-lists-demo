@@ -4,6 +4,7 @@ import { Checkbox, HTMLTable } from '@blueprintjs/core';
 
 const debug = false;  // XXX
 
+// NICE: reveal this panel by clicking a Button.
 
 function getConditions(patient) {
   return ['Asthma', 'Fibromyalgia', 'Cancer'];
@@ -36,11 +37,15 @@ const extraAttributeGetters = [
 
 // TODO: decide what the tooltip will contain when hovering over the row.
 export default function ExtraAttributesPanel(props) {
-  const extraAttributes = props.extraAttributes;
-  const setExtraAttributes = props.setExtraAttributes;
-
-  console.log('ExtraAttributesPanel', props, extraAttributes);  // XXX
-  if (debug) { console.log('ExtraAttributesPanel', setExtraAttributes); } // XXX
+  // Applies the changes.
+  function handleAttributeSelected(event, what) {
+    const setColumns = props.setExtraAttributeGetters;
+    if (event.target.checked) {
+      setColumns([...props.extraAttributeGetters, what]);
+    } else {
+      setColumns(props.extraAttributeGetters.filter(x => x[0] !== what[0]));
+    }
+  }
 
   return (
     <>
@@ -51,11 +56,15 @@ export default function ExtraAttributesPanel(props) {
         <HTMLTable condensed={true}>
           <tbody>
             {extraAttributeGetters
-              .map(x => x[0])
               .map(x =>
-                <tr key={x}>
+                <tr key={x[0]}>
                   <td>
-                    <Checkbox>{x}</Checkbox>
+                    <Checkbox
+                      onChange={(e) => handleAttributeSelected(e, x)}
+                      checked={props.isChecked}
+                    >
+                      {x[0]}
+                    </Checkbox>
                   </td>
                 </tr>
               )

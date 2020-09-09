@@ -121,6 +121,7 @@ class ListsPanel extends React.Component {
   }
 
   refreshData() {
+    this.props.setPatients([]);
     this.refreshResources('Group', 'groups', ['Group:member']);
     this.refreshResources('Location', 'locations');
     // NICE: examine the fetched data, logging a warning to DeveloperPanel if any look malformed
