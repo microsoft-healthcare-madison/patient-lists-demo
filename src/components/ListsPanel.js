@@ -153,7 +153,7 @@ class ListsPanel extends React.Component {
     //       Remove members from lists that are un-selected.
     //       Afterward, any members that are included in visible lists should appear in the
     //       Patients panel.
-    if (!checked) {
+    if (!checked || !resource.member) {
       this.props.setPatients([]);
       return;
     }
