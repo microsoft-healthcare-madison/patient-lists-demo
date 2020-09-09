@@ -1,7 +1,6 @@
 import { drain, getRefsFrom, filterLists } from 'api';
 import React from 'react';
-import 'components/ListsPanel.css'
-import { Checkbox } from "@blueprintjs/core";
+import { Checkbox, HTMLTable } from "@blueprintjs/core";
 import { Resource } from 'components/FHIRResource';
 
 const debug = false;  // XXX
@@ -52,7 +51,7 @@ function ListSelector(props) {
     return <></>;
   }
   return (
-    <table>
+    <HTMLTable condensed={true}>
       <tbody>{
         props.lists.map((x) => {
           return ResourceRow({
@@ -62,7 +61,7 @@ function ListSelector(props) {
           });
         })
       }</tbody>
-    </table>
+    </HTMLTable>
   );
 }
 
