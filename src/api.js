@@ -44,9 +44,14 @@ export function getRefsFrom(bundle, code) {
 export async function drain(resourceUrl, bearerToken, progressCallback) {
   const bundles = [];
   let url = resourceUrl;
+  const authorization = {
+    headers: {
+      Authorization: `Bearer ${bearerToken}`
+    }
+  }
   do {
     // Fetch a bundle from the URL.
-    await fetch(url)
+    await fetch(url, bearerToken ? authorization : undefined)
       .then(response => response.json())
       .then(bundle => bundles.push(bundle));
     const newBundle = bundles.pop();
