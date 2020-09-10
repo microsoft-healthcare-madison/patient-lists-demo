@@ -31,16 +31,14 @@ function ServerInputForm(props) {
   const serverRootChanged = (event) => {
     const value = event.target.value.trim();
     setServerRootURL(value);
-    /*
     try {
       new URL(value);
-      fetch(value + '/CapabilityStatement')
+      fetch(value + '/metadata')
         .then(() => setValidURL(true))
         .catch(() => setValidURL(false));
     } catch(e) {
       setValidURL(false);
     }
-    */
   }
 
   // Updates the input field as the user enters new values.
