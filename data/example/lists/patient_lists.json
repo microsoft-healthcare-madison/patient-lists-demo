@@ -3,7 +3,7 @@
   "type": "transaction",
   "entry": [
     {
-      "fullUrl": "http://localhost:8080/hapi-fhir-jpaserver/fhir/Group/0",
+      "fullUrl": "Group/0",
       "resource": {
         "resourceType": "Group",
         "id": "0",
@@ -17,7 +17,7 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/hapi-fhir-jpaserver/fhir/Group/1",
+      "fullUrl": "Group/1",
       "resource": {
         "resourceType": "Group",
         "id": "1",
@@ -31,7 +31,7 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/hapi-fhir-jpaserver/fhir/Group/2",
+      "fullUrl": "Group/2",
       "resource": {
         "resourceType": "Group",
         "id": "2",
@@ -53,7 +53,7 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/hapi-fhir-jpaserver/fhir/Group/3",
+      "fullUrl": "Group/3",
       "resource": {
         "resourceType": "Group",
         "id": "3",
@@ -81,7 +81,7 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/hapi-fhir-jpaserver/fhir/Group/4",
+      "fullUrl": "Group/4",
       "resource": {
         "resourceType": "Group",
         "id": "4",
@@ -111,7 +111,7 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/hapi-fhir-jpaserver/fhir/Group/5",
+      "fullUrl": "Group/5",
       "resource": {
         "resourceType": "Group",
         "id": "5",
