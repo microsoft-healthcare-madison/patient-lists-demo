@@ -1,6 +1,6 @@
 import React from 'react';
 import 'components/HeaderPanel.css'
-import { Button, Collapse } from "@blueprintjs/core";
+import { Button, Collapse, InputGroup, Tooltip } from "@blueprintjs/core";
 
 const appTitle = "Patient Lists Demo App";
 
@@ -16,12 +16,15 @@ function ServerInputForm(props) {
   const [tagSystem, setTagSystem] = React.useState(props.tagSystem);
   const [tagCode, setTagCode] = React.useState(props.tagCode)
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [token, setToken] = React.useState('');
 
   const applySettingsButton = (event) => {
     event.preventDefault();
     props.setServerRootURL(serverRootURL);
     props.setTagCode(tagCode);
     props.setTagSystem(tagSystem);
+    props.setBearerToken(token);
   }
 
   // Updates the input field value as the user enters new values.
@@ -48,6 +51,20 @@ function ServerInputForm(props) {
     setTagCode(event.target.value.trim());
   }
 
+  const lockButton = (
+    <Tooltip content={`${showPassword ? "Hide" : "Show"} Password`}>
+      <Button
+        icon={showPassword ? "unlock" : "lock"}
+        minimal={true}
+        onClick={() => setShowPassword(!showPassword)}
+      />
+    </Tooltip>
+  );
+
+  const tokenInput = (event) => {
+    setToken(event.target.value);
+  }
+
   // TODO: replace this homebrewed form with a blueprint FormGroup, maybe.
   return (
     <>
@@ -67,6 +84,23 @@ function ServerInputForm(props) {
             value={serverRootURL}
             onChange={serverRootChanged}
           />
+          <br></br>
+          <br></br>
+
+          <label>Authentication</label>
+          <table>
+            <tbody>
+              <tr><td>Bearer Token</td></tr>
+              <tr><td>
+                <InputGroup
+                  placeholder="Enter a bearer token..."
+                  rightElement={lockButton}
+                  type={showPassword ? "text" : "password"}
+                  onInput={tokenInput}
+                />
+              </td></tr>
+            </tbody>
+          </table>
           <br></br>
           <br></br>
 
@@ -113,8 +147,10 @@ class HeaderPanel extends React.Component {
       <div>
         <span className="app-title">{appTitle}</span>
         <ServerInputForm
+          bearerToken={this.props.bearerToken}
           developerMessages={this.props.developerMessages}
           serverRootURL={this.props.serverRootURL}
+          setBearerToken={this.props.setBearerToken}
           setDeveloperMessages={this.props.setDeveloperMessages}
           setServerRootURL={this.props.setServerRootURL}
           setTagCode={this.props.setTagCode}

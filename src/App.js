@@ -22,6 +22,7 @@ function App() {
   const [extraAttributeGetters, setExtraAttributeGetters] = useState([]);
   const [patients, setPatients] = useState([]);
   const [serverRootURL, setServerRootURL] = useState(defaultServerRootURL);
+  const [bearerToken, setBearerToken] = useState('');
   const [tagSystem, setTagSystem] = useState(defaultTagSystem);
   const [tagCode, setTagCode] = useState(defaultTagCode);
 
@@ -37,8 +38,10 @@ function App() {
       <div className="row">
         <div className="top">
           <HeaderPanel
+            bearerToken={bearerToken}
             developerMessages={developerMessages}
             serverRootURL={serverRootURL}
+            setBearerToken={setBearerToken}
             setDeveloperMessages={setDeveloperMessages}
             setServerRootURL={setServerRootURL}
             setTagCode={setTagCode}
