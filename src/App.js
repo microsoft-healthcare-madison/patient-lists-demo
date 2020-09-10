@@ -12,16 +12,18 @@ import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/select/lib/css/blueprint-select.css';
 
 // TODO: update this with the public-facing URL, when it's available.
-const defaultServerRootURL = "http://localhost:8080/hapi-fhir-jpaserver/fhir/";
-//const defaultServerRootURL = 'http://hapi.fhir.org/baseR4/';
+//const defaultServerRootURL = "http://localhost:8080/hapi-fhir-jpaserver/fhir/";
+const defaultServerRootURL = 'http://hapi.fhir.org/baseR4/';
+const defaultTagSystem = 'http://hl7.org/Connectathon'
+const defaultTagCode = '2020-Sep'
 
 function App() {
   const [developerMessages, setDeveloperMessages] = useState([]);
   const [extraAttributeGetters, setExtraAttributeGetters] = useState([]);
   const [patients, setPatients] = useState([]);
   const [serverRootURL, setServerRootURL] = useState(defaultServerRootURL);
-  const [tagSystem, setTagSystem] = useState('');  // TODO: add a default
-  const [tagCode, setTagCode] = useState('');  // TODO: add a default
+  const [tagSystem, setTagSystem] = useState(defaultTagSystem);
+  const [tagCode, setTagCode] = useState(defaultTagCode);
 
   React.useEffect(() => {
     const message = (
