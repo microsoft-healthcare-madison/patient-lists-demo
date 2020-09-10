@@ -142,6 +142,7 @@ function ServerInputForm(props) {
 }
 
 class HeaderPanel extends React.Component {
+  // TODO: handle requireSummaryDiscovery here with a checkbox
   render() {
     return (
       <div>

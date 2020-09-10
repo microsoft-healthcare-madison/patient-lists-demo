@@ -34,7 +34,7 @@ function ResourceRow(props) {
             )],
             ['actual', resource.actual ? 'true' : 'false'],
             ['type', resource.type],
-            ['members', resource.member ? resource.member.length : 0],
+            ['members', resource.member ? resource.member.length : '?'],
             // TODO: add any other relevant hover-text fields here.
           ];
         }}
@@ -97,6 +97,7 @@ class ListsPanel extends React.Component {
     }
   }
 
+  // TODO: move this into api.js
   // Returns a URL to refresh an optionally tagged resource type which may _include other types.
   getRefreshQueryUrl(resourceType, includes) {
     const params = [];
@@ -111,6 +112,19 @@ class ListsPanel extends React.Component {
       .join("&");
     const query = encodedParamString ? `?${encodedParamString}` : '';
     return `${this.props.serverRootURL}/${resourceType}${query}`;
+  }
+
+  // Returns a summary of the available lists.
+  getDiscoveryUrl() {
+    const params = [['_summary', 'true']];
+    if (this.props.tagSystem && this.props.tagCode) {
+      params.push(['_tag', `${this.props.tagSystem}|${this.props.tagCode}`]);
+    }
+    const encodedParamString = params
+      .map(kv => kv.map(encodeURIComponent).join("="))
+      .join("&");
+    const query = encodedParamString ? `?${encodedParamString}` : '';
+    return `${this.props.serverRootURL}/Group${query}`;
   }
 
   refreshResources(resourceType, stateLocation, includes, validator) {
@@ -129,9 +143,18 @@ class ListsPanel extends React.Component {
       });
   }
 
+  discoverLists() {
+    drain(this.getDiscoveryUrl(), this.props.bearerToken)
+      .then(b => this.setState({ 'groups': b.entry }));
+  }
+
   refreshData() {
     this.props.setPatients([]);
-    this.refreshResources('Group', 'groups');
+    if (this.props.requireSummaryDiscovery) {
+      this.discoverLists();
+    } else {
+      this.refreshResources('Group', 'groups');
+    }
     this.refreshResources('Location', 'locations');
     // NICE: examine the fetched data, logging a warning to DeveloperPanel if any look malformed
   }
