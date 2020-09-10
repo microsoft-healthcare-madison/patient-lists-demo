@@ -29,7 +29,7 @@ export function getRefsFrom(bundle, code) {
 // Returns a de-paginated bundle of resources from an initial URL.
 export async function drain(resourceUrl, bearerToken, progressCallback) {
   const bundles = [];
-  let url = resourceUrl;
+  let url = resourceUrl.replace(/([^:]\/)\/+/g, "$1");
   const authorization = {
     headers: {
       Authorization: `Bearer ${bearerToken}`
@@ -104,7 +104,7 @@ export function resolvePatients(serverRoot, bearerToken, list) {
   }
 
   async function getPatient(reference) {
-    return drain(serverRoot + reference, bearerToken);
+    return drain(serverRoot + '/' + reference, bearerToken);
   }
 
   const members = list.member ? list.member : [];
