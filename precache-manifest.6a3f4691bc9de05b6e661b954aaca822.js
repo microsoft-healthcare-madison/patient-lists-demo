@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "65dd7da4b3f3b74d2bb7163b9252d5ed",
+    "revision": "481e14dd24aac09fe50e9bc075af60ad",
     "url": "/patient-lists-demo/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/patient-lists-demo/static/css/2.7348cf09.chunk.css"
   },
   {
-    "revision": "9af64212adb2846a31fe",
+    "revision": "72f472e20cc37db6d7b8",
     "url": "/patient-lists-demo/static/css/main.85aa9ca0.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/patient-lists-demo/static/js/2.b36b079f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "9af64212adb2846a31fe",
-    "url": "/patient-lists-demo/static/js/main.92f6242e.chunk.js"
+    "revision": "72f472e20cc37db6d7b8",
+    "url": "/patient-lists-demo/static/js/main.2c69daa3.chunk.js"
   },
   {
     "revision": "d2154f1fd97dfce7fd95",
