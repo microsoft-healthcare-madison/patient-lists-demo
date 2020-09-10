@@ -1,4 +1,4 @@
-import { drain, getRefsFrom, filterLists, resolvePatients } from 'api';
+import { drain, filterLists, getRefsFrom, resolvePatients } from 'api';
 import React from 'react';
 import { Radio, RadioGroup } from "@blueprintjs/core";
 import { Resource } from 'components/FHIRResource';
@@ -183,15 +183,16 @@ class ListsPanel extends React.Component {
   }
 
   handleListSelection(resource) {
-    if (!resource.member) {
-      this.props.setPatients([]);
-    } else {
-      resolvePatients(
+    drain(
+      `${this.props.serverRootURL}/Group/${resource.id}`,
+      this.props.bearerToken
+    ).then(
+      group => resolvePatients(
         this.props.serverRootURL,
         this.props.bearerToken,
-        resource,
-      ).then(this.props.setPatients);
-    }
+        group,
+      ).then(this.props.setPatients)
+    );
   }
 
   render() {
