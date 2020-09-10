@@ -28,6 +28,7 @@ done
 
 echo "Loading example data..."
 time ./bin/load.py -o "${DATA}"
+time ./bin/load.py -o "${DATA}/lists"
 echo 'DONE!'
 
 echo "Press Ctrl-C to close the server process..."
