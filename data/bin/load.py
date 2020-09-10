@@ -10,7 +10,6 @@ Useage:
     --delete-all - delete all resources matching the tag
 
 TODO:
-  [ ] implement resource tagging
   [ ] implement delete-all
   [ ] inspect the response to map file fullUrls to server fullUrls
   [ ] remove the deduplicated output to files option (or fix it to work with transaction bundles).  # noqa
@@ -30,11 +29,32 @@ from urllib.parse import urlparse
 import click  # pip3 install click
 import requests  # pip3 install requests
 
+RESOURCE_TAG = '|'.join([
+    'http://hl7.org/Connectathon',
+    '2020-Sep',
+])
 TEST_SERVER = 'http://localhost:8080/hapi-fhir-jpaserver/fhir'
 
 
 class Error(Exception):
     pass
+
+
+class EntryTagger:
+    """Injects a tag into bundle entries before they are loaded."""
+    def __init__(self, tag_query, tags=None):
+        self._query = tag_query.strip()
+        if not tags:
+            system, code = f'{tag_query}|'.split('|', 1)
+            tags = [{'system': system, 'code': code.strip('|')}]
+        self._tags = tags
+
+    def tag(self, entries):
+        """Yields entries that include a custom tag."""
+        for entry in entries:
+            if self._query:
+                entry['resource'].setdefault('meta', {})['tag'] = self._tags
+            yield entry
 
 
 class EntryFilter:
@@ -117,7 +137,6 @@ def load_bundle(server, bundle):
 
 def list_files(dirname):
     """Yields the absolute path json file names from a directory."""
-    # TODO: replace with os.walk when more than one dir levels are needed.
     for filename in sorted(glob.glob(f'{dirname}{os.path.sep}*.json')):
         yield os.path.abspath(filename)
 
@@ -135,9 +154,14 @@ def list_files(dirname):
     '--server', '-s', default=TEST_SERVER, show_default=True,
     help='An open FHIR server base URL.  Set to "" to disable.'
 )
-def main(output, deduped, server):
+@click.option(
+    '--tag', '-t', default=RESOURCE_TAG, show_default=True
+)
+def main(output, deduped, server, tag):
     entry_filter = EntryFilter(hashlib.md5)
+    entry_tagger = EntryTagger(tag)
     bundle_count = 0
+
     if server:
         fhir_server = Server(server)
 
@@ -147,9 +171,9 @@ def main(output, deduped, server):
     for json_file in list_files(output):
         with open(json_file) as fd:
             bundle = json.loads(fd.read())
-            if False:  # TODO: fix or replace the entry filter.
-                entries = bundle['entry']
-                entries[:] = [e for e in entry_filter.filter(entries)]
+            entries = bundle['entry']
+#            entries[:] = [e for e in entry_filter.filter(entries)]
+            entries[:] = [e for e in entry_tagger.tag(entries)]
             bundle_count += 1
 
         if deduped:

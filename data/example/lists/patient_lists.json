@@ -39,11 +39,11 @@
         "type": "person",
         "name": "Organization Managed #1",
         "managingEntity": {
-          "reference": "Organization/3"
+          "reference": "Organization/1461400"
         },
         "member": [ {
           "entity": {
-            "reference": "Patient/1"
+            "reference": "Patient/1461398"
           }
         } ]
       },
@@ -61,17 +61,17 @@
         "type": "person",
         "name": "Practitioner Managed #1",
         "managingEntity": {
-          "reference": "Practitioner/4"
+          "reference": "Practitioner/1461401"
         },
         "member": [
           {
             "entity": {
-              "reference": "Patient/1"
+              "reference": "Patient/1461398"
             }
           },
           {
             "entity": {
-              "reference": "Patient/227"
+              "reference": "Patient/1461624"
             }
         } ]
       },
@@ -96,12 +96,12 @@
             } ]
           },
           "valueReference": {
-            "reference": "Location/2"
+            "reference": "Location/1461399"
           }
         } ],
         "member": [ {
           "entity": {
-            "reference": "Patient/1"
+            "reference": "Patient/1461398"
           }
         } ]
       },
@@ -126,12 +126,12 @@
             } ]
           },
           "valueReference": {
-            "reference": "CareTeam/235"
+            "reference": "CareTeam/1463628"
           }
         } ],
         "member": [ {
           "entity": {
-            "reference": "Patient/227"
+            "reference": "Patient/1461624"
           }
         } ]
       },

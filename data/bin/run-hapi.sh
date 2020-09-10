@@ -27,7 +27,7 @@ while true; do
 done
 
 echo "Loading example data..."
-./bin/load.py -o "${DATA}"
+time ./bin/load.py -o "${DATA}"
 echo 'DONE!'
 
 echo "Press Ctrl-C to close the server process..."
