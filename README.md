@@ -2,8 +2,17 @@
 ## 2020-Sep Connectathon
 This app will be used by Patient Lists connectathon participants to test their servers against a simple app.  Non-server participants (who are client-focused) can use the provided server against their apps, too.
 
+## Demo App
+This app has been published as a static page here: <https://microsoft-healthcare-madison.github.io/patient-lists-demo/>
+
+### Publishing Changes
+New versions of the app can be published by running:
+```shell
+npm run deploy
+```
+
 ## Local Test Data
-To run this app locally - you can run a local hapi server populated with Synthea-generated data, which is provided in the root-level `data` directory.
+To run this app locally - you can run a local hapi server populated with Synthea-generated data, all of which is provided in the root-level `data` directory.
 
 The script that populates the local server runs in `python3` and has a few dependencies which are recorded in `requirements.txt`.  To install them:
 ```shell
@@ -12,17 +21,19 @@ pip3 install requirements.txt
 
 To launch a local hapi server, populated with the example data, run the provided script in a terminal and leave it running:
 ```shell
-$ cd data
-$ ./bin/run-hapi.sh
+$ ./data/bin/run-hapi.sh
 Waiting for server to start...
   ... still starting
   ... still starting
 HAPI IS UP
 Loading example data...
 LOADING BUNDLE...
+...
 LOADING BUNDLE...
 DONE!
 Press Ctrl-C to close the server process...
+
+docker run -p $PORT:$PORT hapiproject/hapi:latest >&/dev/null
 ```
 
 To interrupt the server, press `Ctrl-C` to stop it.

@@ -149,7 +149,7 @@ def main(output, deduped, server):
     with open(json_file) as fd:
       bundle = json.loads(fd.read())
       entries = bundle['entry']
-      entries[:] = [e for e in entry_filter.filter(entries)]
+#      entries[:] = [e for e in entry_filter.filter(entries)]
       bundle_count += 1
 
     if deduped:
