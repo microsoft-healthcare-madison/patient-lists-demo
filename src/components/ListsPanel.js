@@ -87,6 +87,7 @@ class ListsPanel extends React.Component {
       locations: [],
       locationsIncluded: [],
       serverRoot: props.serverRootURL,
+      bearerToken: props.bearerToken,
       tagCode: props.tagCode,
       tagSystem: props.tagSystem,
     };
@@ -118,7 +119,7 @@ class ListsPanel extends React.Component {
 
   refreshResources(resourceType, stateLocation, includes, validator) {
     const url = this.getRefreshQueryUrl(resourceType, includes);
-    drain(url, (x, total) => { this.progressCallback(resourceType, x, total); })
+    drain(url, this.props.bearerToken, (x, total) => { this.progressCallback(resourceType, x, total); })
       .then((bundle) => {
         const newState = {};
         const resources = bundle.entry.filter(e => e.resource.resourceType === resourceType);
@@ -148,6 +149,7 @@ class ListsPanel extends React.Component {
     // Refresh ALL the cached data when the server component has changed.
     const needsRefresh =
       (this.state.serverRoot !== this.props.serverRootURL) ||
+      (this.state.bearerToken !== this.props.bearerToken) ||
       (this.state.tagCode !== this.props.tagCode) ||
       (this.state.tagSystem !== this.props.tagSystem);
 
@@ -155,6 +157,7 @@ class ListsPanel extends React.Component {
       this.refreshData();
       this.setState({
         serverRoot: this.props.serverRootURL,
+        bearerToken: this.props.bearerToken,
         tagCode: this.props.tagCode,
         tagSystem: this.props.tagSystem,
       });
@@ -233,6 +236,7 @@ class ListsPanel extends React.Component {
             handleListSelection={this.handleListSelection}
             lists={filterLists(lists, selections)}
             serverRootURL={this.props.serverRootURL}
+            bearerToken={this.props.bearerToken}
           />
         </div>
       </>

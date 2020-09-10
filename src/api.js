@@ -41,7 +41,7 @@ export function getRefsFrom(bundle, code) {
 // NICE: Don't return a Bundle.  Instead return a list of tuples: [[ResourceType, [resources]], ...]
 
 // Returns a de-paginated bundle of resources from an initial URL.
-export async function drain(resourceUrl, progressCallback) {
+export async function drain(resourceUrl, bearerToken, progressCallback) {
   const bundles = [];
   let url = resourceUrl;
   do {
