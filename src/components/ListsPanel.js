@@ -1,4 +1,4 @@
-import { drain, getRefsFrom, filterLists } from 'api';
+import { drain, getRefsFrom, filterLists, resolvePatients } from 'api';
 import React from 'react';
 import { Radio, RadioGroup } from "@blueprintjs/core";
 import { Resource } from 'components/FHIRResource';
@@ -82,10 +82,6 @@ class ListsPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      groups: [],
-      groupsIncluded: [],
-      locations: [],
-      locationsIncluded: [],
       serverRoot: props.serverRootURL,
       bearerToken: props.bearerToken,
       tagCode: props.tagCode,
@@ -135,8 +131,7 @@ class ListsPanel extends React.Component {
 
   refreshData() {
     this.props.setPatients([]);
-    //this.props.setSelectedList(undefined);
-    this.refreshResources('Group', 'groups', ['Group:member']);
+    this.refreshResources('Group', 'groups');
     this.refreshResources('Location', 'locations');
     // NICE: examine the fetched data, logging a warning to DeveloperPanel if any look malformed
   }
@@ -164,47 +159,15 @@ class ListsPanel extends React.Component {
     }
   }
 
-  // BUG: This app assumes that a Group's member.entity contains a 'reference' to a patient.
-  //      The 'reference' member.entity attribute is technically optional - there are other
-  //      ways to represent a reference to a list member.
-  //      Maybe a validator can log a warning about that earlier in the UI when encountered
-  //      (and fail gracefully).
-
-  // TODO: move this logic to the api.js module, since it has nothing to do with rendering and
-  //       everything to do with the new API.
-
-  // TODO: include the FHIR server root URL in case it's needed to fetch a patient that's not
-  //       in the cache already.
-
-  // Returns the complete list of Patient resources who are members of a list.
-  resolvePatients(list, cachedPatients) {
-
-    // Returns the reference for a list member from the list.member fragment.
-    function getReference(member) {
-      if (member && member.entity) {
-        return member.entity.reference;
-      }
-      console.log('resolvePatients.getReference: unknown reference type in:', list);
-    }
-
-    const members = list.member ? list.member : [];
-    const memberRefs = new Set(members.map(getReference).filter(x => x));
-
-    // NICE: if the member is not in the cache, log a warning somewhere, or maybe fetch it.
-
-    return cachedPatients
-      .map(x => x.resource)
-      .filter(r => memberRefs.has(`${r.resourceType}/${r.id}`)
-    );
-  }
-
   handleListSelection(resource) {
     if (!resource.member) {
       this.props.setPatients([]);
     } else {
-      this.props.setPatients(
-        this.resolvePatients(resource, this.state.groupsIncluded)
-      );
+      resolvePatients(
+        this.props.serverRootURL,
+        this.props.bearerToken,
+        resource,
+      ).then(this.props.setPatients);
     }
   }
 
@@ -229,7 +192,7 @@ class ListsPanel extends React.Component {
     return (
       <>
         <div style={{ fontWeight: 'bold' }} >
-          Patient Lists ({this.state.groups.length})
+          Patient Lists ({this.state.groups ? this.state.groups.length : 0})
         </div>
         <div style={{ overflowY: 'scroll' }} >
           <ListSelector

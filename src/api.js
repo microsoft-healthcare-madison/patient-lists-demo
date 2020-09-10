@@ -1,11 +1,4 @@
-// TODO: consider renaming this file
-
 export const codeSystem = "http://argonautproject.org/patient-lists/CodeSystem/characteristics";
-export const demoTag = {
-  system: 'http://connectathon.fhir.org/',
-  code: '2020-sep',
-};
-
 
 // Returns the non-empty resources from a bundle.
 function getResources(bundle) {
@@ -33,13 +26,6 @@ export function getRefsFrom(bundle, code) {
   return [...locations].sort();
 }
 
-// NICE: When the results include resources of different types, there should be
-//       separate bundles per type.  So, if the first pages of bundles contain
-//       Group followed by pages of Patient bundles - the returned value should be
-//       a list of 2 bundles with all the Groups and Patients separated.
-
-// NICE: Don't return a Bundle.  Instead return a list of tuples: [[ResourceType, [resources]], ...]
-
 // Returns a de-paginated bundle of resources from an initial URL.
 export async function drain(resourceUrl, bearerToken, progressCallback) {
   const bundles = [];
@@ -55,6 +41,9 @@ export async function drain(resourceUrl, bearerToken, progressCallback) {
       .then(response => response.json())
       .then(bundle => bundles.push(bundle));
     const newBundle = bundles.pop();
+    if (newBundle.resourceType !== 'Bundle') {
+      return newBundle;
+    }
     if (!newBundle.entry) { newBundle.entry = []; }
 
     // If the search was paginated, prepare to fetch the following bundle.
@@ -78,6 +67,10 @@ export async function drain(resourceUrl, bearerToken, progressCallback) {
 
 // Returns a list of resources from a bundle based on in-app selections.
 export function filterLists(lists, selections) {
+  if (!lists) {
+    return [];
+  }
+
   // Shallow-copy the list.
   const listsCopy = [...lists];
 
@@ -92,4 +85,30 @@ export function filterLists(lists, selections) {
     const right = b.resource.name || '';
     return left.localeCompare(right);
   });
+}
+
+// BUG: This app assumes that a Group's member.entity contains a 'reference' to a patient.
+//      The 'reference' member.entity attribute is technically optional - there are other
+//      ways to represent a reference to a list member.
+//      Maybe a validator can log a warning about that earlier in the UI when encountered
+//      (and fail gracefully).
+
+// Returns the complete list of Patient resources who are members of a list.
+export function resolvePatients(serverRoot, bearerToken, list) {
+  // Returns the reference for a list member from the list.member fragment.
+  function getReference(member) {
+    if (member && member.entity) {
+      return member.entity.reference;
+    }
+    console.warn('api.resolvePatients.getReference: unknown reference type in:', list, member);
+  }
+
+  async function getPatient(reference) {
+    return drain(serverRoot + reference, bearerToken);
+  }
+
+  const members = list.member ? list.member : [];
+  const memberRefs = [...new Set(members.map(getReference).filter(x => x))];
+  const promises = memberRefs.map(ref => getPatient(ref));
+  return Promise.all(promises);
 }
