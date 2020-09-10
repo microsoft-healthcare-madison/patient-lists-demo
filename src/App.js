@@ -13,7 +13,7 @@ import '@blueprintjs/select/lib/css/blueprint-select.css';
 
 // TODO: update this with the public-facing URL, when it's available.
 //const defaultServerRootURL = "http://localhost:8080/hapi-fhir-jpaserver/fhir/";
-const defaultServerRootURL = 'http://hapi.fhir.org/baseR4/';
+const defaultServerRootURL = 'https://hapi.fhir.org/baseR4/';
 const defaultTagSystem = 'http://hl7.org/Connectathon'
 const defaultTagCode = '2020-Sep'
 
@@ -22,6 +22,7 @@ function App() {
   const [extraAttributeGetters, setExtraAttributeGetters] = useState([]);
   const [patients, setPatients] = useState([]);
   const [serverRootURL, setServerRootURL] = useState(defaultServerRootURL);
+  const [bearerToken, setBearerToken] = useState('');
   const [tagSystem, setTagSystem] = useState(defaultTagSystem);
   const [tagCode, setTagCode] = useState(defaultTagCode);
 
@@ -37,8 +38,10 @@ function App() {
       <div className="row">
         <div className="top">
           <HeaderPanel
+            bearerToken={bearerToken}
             developerMessages={developerMessages}
             serverRootURL={serverRootURL}
+            setBearerToken={setBearerToken}
             setDeveloperMessages={setDeveloperMessages}
             setServerRootURL={setServerRootURL}
             setTagCode={setTagCode}
@@ -51,6 +54,7 @@ function App() {
       <div className="row">
         <div className="left">
           <ListsPanel
+            bearerToken={bearerToken}
             developerMessages={developerMessages}
             serverRootURL={serverRootURL}
             setDeveloperMessages={setDeveloperMessages}
@@ -61,6 +65,7 @@ function App() {
         </div>
         <div className="center">
           <PatientsPanel
+            bearerToken={bearerToken}
             extraAttributeGetters={extraAttributeGetters}
             patients={patients}
             setDeveloperMessages={setDeveloperMessages}
@@ -68,6 +73,7 @@ function App() {
         </div>
         <div className="right">
           <ExtraAttributesPanel
+            bearerToken={bearerToken}
             extraAttributeGetters={extraAttributeGetters}
             setExtraAttributeGetters={setExtraAttributeGetters}
           />
