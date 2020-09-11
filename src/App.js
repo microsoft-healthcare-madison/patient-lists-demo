@@ -25,6 +25,7 @@ function App() {
   const [bearerToken, setBearerToken] = useState('');
   const [tagSystem, setTagSystem] = useState(defaultTagSystem);
   const [tagCode, setTagCode] = useState(defaultTagCode);
+  const [requireSummaryDiscovery, setRequireSummaryDiscovery] = useState(true);
 
   React.useEffect(() => {
     const message = (
@@ -40,9 +41,11 @@ function App() {
           <HeaderPanel
             bearerToken={bearerToken}
             developerMessages={developerMessages}
+            requireSummaryDiscovery={requireSummaryDiscovery}
             serverRootURL={serverRootURL}
             setBearerToken={setBearerToken}
             setDeveloperMessages={setDeveloperMessages}
+            setRequireSummaryDiscovery={setRequireSummaryDiscovery}
             setServerRootURL={setServerRootURL}
             setTagCode={setTagCode}
             setTagSystem={setTagSystem}
@@ -56,6 +59,7 @@ function App() {
           <ListsPanel
             bearerToken={bearerToken}
             developerMessages={developerMessages}
+            requireSummaryDiscovery={requireSummaryDiscovery}
             serverRootURL={serverRootURL}
             setDeveloperMessages={setDeveloperMessages}
             setPatients={setPatients}
