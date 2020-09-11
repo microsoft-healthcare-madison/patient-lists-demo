@@ -5,24 +5,24 @@ import { Checkbox, HTMLTable } from '@blueprintjs/core';
 // NICE: reveal this panel by clicking a Button.
 
 function getConditions(patient) {
-  return ['Asthma', 'Fibromyalgia', 'Cancer'];
+  return ['FAKE', 'Asthma', 'Fibromyalgia', 'Cancer'];
 }
 
 function getLatestEncounter(patient) {
-  return '2020-08-21';
+  return 'FAKE 2020-08-21';
 }
 
 function getLastImmunization(patient) {
-  return '2019-12-26';
+  return 'FAKE 2019-12-26';
 }
 
 function getLocation(patient) {
-  return 'Ward 1';
+  return 'FAKE Ward 1';
 }
 
 function getPCP(patient) {
   // TODO: implement this
-  return 'Dr. Doe';
+  return 'FAKE Dr. Doe';
 }
 
 const extraAttributeGetters = [
