@@ -29,6 +29,7 @@ export function getRefsFrom(bundle, code) {
 // Returns a de-paginated bundle of resources from an initial URL.
 export async function drain(resourceUrl, bearerToken, progressCallback) {
   const bundles = [];
+  const originalProtocol = new URL(resourceUrl).protocol;
   let url = resourceUrl.replace(/([^:]\/)\/+/g, "$1");
   const authorization = {
     headers: {
@@ -36,6 +37,17 @@ export async function drain(resourceUrl, bearerToken, progressCallback) {
     }
   }
   do {
+    // HACK: fixes https://github.com/microsoft-healthcare-madison/patient-lists-demo/issues/15
+    const parsedURL = new URL(url);
+    if (parsedURL.protocol !== originalProtocol) {
+      console.warn(`
+        Unexpected change of protocol when draining a resource URL!!!
+        Server at ${parsedURL.host} changed from ${originalProtocol} to ${parsedURL.protocol}.
+        Reverting protocol back to ${originalProtocol}!
+      `.replace(/\s+/g, ' ').trim());
+      parsedURL.protocol = originalProtocol;
+      url = parsedURL.href;
+    }
     // Fetch a bundle from the URL.
     await fetch(url, bearerToken ? authorization : undefined)
       .then(response => response.json())
