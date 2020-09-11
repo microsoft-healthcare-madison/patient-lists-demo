@@ -33,7 +33,8 @@ function ServerInputForm(props) {
     setServerRootURL(value);
     try {
       new URL(value);
-      fetch(value + '/metadata')
+      const metadataUrl = (value + '/metadata').replace(/([^:]\/)\/+/g, "$1");
+      fetch(metadataUrl)
         .then(() => setValidURL(true))
         .catch(() => setValidURL(false));
     } catch(e) {
