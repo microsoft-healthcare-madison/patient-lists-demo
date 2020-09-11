@@ -16,7 +16,7 @@ function ServerInputForm(props) {
   const [tagSystem, setTagSystem] = React.useState(props.tagSystem);
   const [tagCode, setTagCode] = React.useState(props.tagCode)
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showToken, setShowToken] = React.useState(false);
   const [token, setToken] = React.useState('');
 
   const applySettingsButton = (event) => {
@@ -53,11 +53,11 @@ function ServerInputForm(props) {
   }
 
   const lockButton = (
-    <Tooltip content={`${showPassword ? "Hide" : "Show"} Password`}>
+    <Tooltip content={`${showToken ? "Hide" : "Show"} Token`}>
       <Button
-        icon={showPassword ? "unlock" : "lock"}
+        icon={showToken ? "unlock" : "lock"}
         minimal={true}
-        onClick={() => setShowPassword(!showPassword)}
+        onClick={() => setShowToken(!showToken)}
       />
     </Tooltip>
   );
@@ -96,7 +96,7 @@ function ServerInputForm(props) {
                 <InputGroup
                   placeholder="Enter a bearer token..."
                   rightElement={lockButton}
-                  type={showPassword ? "text" : "password"}
+                  type={showToken ? "text" : "token"}
                   onInput={tokenInput}
                 />
               </td></tr>
