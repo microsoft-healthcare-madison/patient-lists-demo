@@ -2,28 +2,23 @@
 """A script to load FHIR resources into an open FHIR server.
 
 Useage:
-  load.py --data <folder> [--server <server_base>] [--deduped <folder>] [--tag id] [--delete-all]  # noqa
+  load.py --data <folder> [--server <server_base>] [--tag id] [--delete-all]
     --data <folder> - a folder containing synthea fhir output json bundles
     --server <base> - a FHIR server base URL to PUT all data into
-    --deduped <folder> - a folder to write bundles with unique entries as json
     --tag id - a string to tag all loaded resources with
     --delete-all - delete all resources matching the tag
 
 TODO:
   [ ] implement delete-all
-  [ ] inspect the response to map file fullUrls to server fullUrls
-  [ ] remove the deduplicated output to files option (or fix it to work with transaction bundles).  # noqa
-  [ ] send deduplicated contents to the server.
+  [ ] enable bearer token authentication
+  [ ] make --server mandatory?
 
 """
 import glob
-import hashlib
 import json
 import os
 import pprint
-import re
 import socket
-import sys
 from urllib.parse import urlparse
 
 import click  # pip3 install click
@@ -57,25 +52,45 @@ class EntryTagger:
             yield entry
 
 
-class EntryFilter:
-    """Removes any entries from a bundle that have already been encountered."""
+class EntryReferenceUpdater:
+    """Updates references to use an ID and creates Resources conditionally."""
 
-    def __init__(self, hash_algorithm):
-        self._hash = hash_algorithm
-        self._entry_hashes = {}
-        self._filtered = 0
+    _id_type = {}
+    _identifier = 'https://github.com/synthetichealth/synthea'
 
-    def filter(self, entries):
-        """Yields entries that have never been encountered."""
+    def collect_ids(self, entries):
+        """Updates the collection mapping uuid to resourceType for each entry.
+
+        Param:
+        entries: list of Resources, each with at least 'id' and 'resourceType'
+        """
+        self._id_type.update({
+            e['resource']['id']: e['resource']['resourceType'] for e in entries
+        })
+
+    def update_references(self, resource):
+        for key, value in resource.items():
+            if key == 'reference' and value.startswith('urn:uuid:'):
+                uuid = value.split(':')[-1]
+                if uuid in self._id_type:
+                    resource[key] = f"{self._id_type[uuid]}?identifier={uuid}"
+            elif value.__class__.__name__ == 'dict':
+                self.update_references(value)  # Recurse!
+            elif value.__class__.__name__ == 'list':
+                map(self.update_references, value)  # Recurse!
+
+    def update_request(self, entry):
+        if 'identifier' in entry['resource']:
+            entry['request'].setdefault(
+                'ifNoneExist',
+                f"identifier={self._identifier}|{entry['resource']['id']}",
+            )
+
+    def update(self, entries):
         for entry in entries:
-            entry_str = json.dumps(entry).encode('utf-8')
-            entry_hash = self._hash(entry_str).hexdigest()
-            entry_id = entry['fullUrl']
-            if self._entry_hashes.get(entry_id) != entry_hash:
-                self._entry_hashes[entry_id] = entry_hash
-                yield entry
-            else:
-                self._filtered += 1
+            self.update_request(entry)
+            self.update_references(entry['resource'])
+            yield entry
 
 
 class Server:
@@ -143,12 +158,8 @@ def list_files(dirname):
 
 @click.command()
 @click.option(
-    '--data', '-o', default='.', show_default=True,
+    '--data', '-d', default='.', show_default=True,
     help='Folder containing synthea output json files to load.'
-)
-@click.option(
-    '--deduped', '-d', default='', show_default=True,
-    help='Folder to write bundles with distinct entries, ordering files.'
 )
 @click.option(
     '--server', '-s', default=TEST_SERVER, show_default=True,
@@ -157,16 +168,13 @@ def list_files(dirname):
 @click.option(
     '--tag', '-t', default=RESOURCE_TAG, show_default=True
 )
-def main(data, deduped, server, tag):
-    entry_filter = EntryFilter(hashlib.md5)
+def main(data, server, tag):
+    entry_updatr = EntryReferenceUpdater()
     entry_tagger = EntryTagger(tag)
     bundle_count = 0
 
     if server:
         fhir_server = Server(server)
-
-    if deduped and not os.path.isdir(deduped):
-        raise Exception(f'Deduped dir does not exist: {deduped}')
 
     if data and not os.path.isdir(data):
         raise Exception(f'Data dir does not exist: {data}')
@@ -175,15 +183,10 @@ def main(data, deduped, server, tag):
         with open(json_file) as fd:
             bundle = json.loads(fd.read())
             entries = bundle['entry']
-#            entries[:] = [e for e in entry_filter.filter(entries)]
+            entry_updatr.collect_ids(entries)
+            entries[:] = [e for e in entry_updatr.update(entries)]
             entries[:] = [e for e in entry_tagger.tag(entries)]
             bundle_count += 1
-
-        if deduped:
-            deduped_file = f'{deduped}{os.path.sep}{bundle_count:05}.json'
-            with open(deduped_file, 'w') as fd:
-                fd.write(json.dumps(bundle, indent=2))
-                fd.write('\n')
 
         if server:
             load_bundle(fhir_server, bundle)

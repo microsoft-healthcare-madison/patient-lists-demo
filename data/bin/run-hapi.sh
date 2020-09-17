@@ -26,7 +26,7 @@ while true; do
   sleep 1
 done
 
-echo "Loading example data..."
+echo "Loading ${DATA} data..."
 time ./bin/load.py -d "${DATA}"
 time ./bin/load.py -d "${DATA}/lists"
 echo 'DONE!'
