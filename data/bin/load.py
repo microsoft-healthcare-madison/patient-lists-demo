@@ -2,8 +2,8 @@
 """A script to load FHIR resources into an open FHIR server.
 
 Useage:
-  load.py --output <folder> [--server <server_base>] [--deduped <folder>] [--tag id] [--delete-all]  # noqa
-    --output <folder> - a folder containing synthea fhir output json bundles
+  load.py --data <folder> [--server <server_base>] [--deduped <folder>] [--tag id] [--delete-all]  # noqa
+    --data <folder> - a folder containing synthea fhir output json bundles
     --server <base> - a FHIR server base URL to PUT all data into
     --deduped <folder> - a folder to write bundles with unique entries as json
     --tag id - a string to tag all loaded resources with
@@ -143,7 +143,7 @@ def list_files(dirname):
 
 @click.command()
 @click.option(
-    '--output', '-o', default='.', show_default=True,
+    '--data', '-o', default='.', show_default=True,
     help='Folder containing synthea output json files to load.'
 )
 @click.option(
@@ -157,7 +157,7 @@ def list_files(dirname):
 @click.option(
     '--tag', '-t', default=RESOURCE_TAG, show_default=True
 )
-def main(output, deduped, server, tag):
+def main(data, deduped, server, tag):
     entry_filter = EntryFilter(hashlib.md5)
     entry_tagger = EntryTagger(tag)
     bundle_count = 0
@@ -168,7 +168,10 @@ def main(output, deduped, server, tag):
     if deduped and not os.path.isdir(deduped):
         raise Exception(f'Deduped dir does not exist: {deduped}')
 
-    for json_file in list_files(output):
+    if data and not os.path.isdir(data):
+        raise Exception(f'Data dir does not exist: {data}')
+
+    for json_file in list_files(data):
         with open(json_file) as fd:
             bundle = json.loads(fd.read())
             entries = bundle['entry']

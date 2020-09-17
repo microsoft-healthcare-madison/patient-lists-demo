@@ -8,7 +8,7 @@ set -m
 set -u
 
 PORT="${PORT:-8080}"
-DATA="example"
+DATA="${DATA:-example}"
 
 # Switch to the dir _above_ where this script lives.
 SCRIPT_DIR="$( dirname ${0} )"
@@ -27,8 +27,8 @@ while true; do
 done
 
 echo "Loading example data..."
-time ./bin/load.py -o "${DATA}"
-time ./bin/load.py -o "${DATA}/lists"
+time ./bin/load.py -d "${DATA}"
+time ./bin/load.py -d "${DATA}/lists"
 echo 'DONE!'
 
 echo "Press Ctrl-C to close the server process..."
