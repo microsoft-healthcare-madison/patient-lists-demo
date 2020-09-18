@@ -9,13 +9,14 @@ set -u
 
 PORT="${PORT:-8080}"
 DATA="${DATA:-example}"
+HAPI="hapiproject/hapi:v5.0.0"
 
 # Switch to the dir _above_ where this script lives.
 SCRIPT_DIR="$( dirname ${0} )"
 cd "${SCRIPT_DIR}"/..
 
 # Launch the dockerized hapi server.
-docker run -p $PORT:$PORT hapiproject/hapi:latest &>/dev/null &
+docker run --rm -p $PORT:$PORT $HAPI &>/dev/null &
 
 # Busy-wait until the server is up.
 echo "Waiting for server to start..."
