@@ -14,6 +14,7 @@ TODO:
   [ ] make --server mandatory?
 
 """
+import functools
 import glob
 import json
 import os
@@ -60,6 +61,7 @@ class EntryReferenceUpdater:
     _no_identifier_types = [
         'Provenance',
     ]
+    _referrers = {}
 
     def collect_ids(self, entries):
         """Updates the collection mapping uuid to resourceType for each entry.
@@ -88,26 +90,28 @@ class EntryReferenceUpdater:
         if not [x for x in resource['identifier'] if x.get('value') == uuid]:
             resource['identifier'].append(synthea_id)
 
-    def update_references(self, resource):
+    def update_references(self, resource, parent_uuid):
         """Recursively updates all references in a Resource to be conditional.
 
         See Conditional References: https://www.hl7.org/fhir/http.html#trules
 
         Param:
           resource: a FHIR Resource dict.
+          parent_uuid: str, the uuid of the enclosing Resource (the referrer).
         """
         if resource.__class__.__name__ != 'dict':
             return
         for key, value in resource.items():
             if key == 'reference' and value.startswith('urn:uuid:'):
                 uuid = value.split(':')[-1]
+                self._referrers.setdefault(uuid, set()).add(parent_uuid)
                 if uuid in self._id_type:
                     resource[key] = f"{self._id_type[uuid]}?identifier={uuid}"
             elif value.__class__.__name__ == 'dict':
-                self.update_references(value)  # Recurse!
+                self.update_references(value, parent_uuid)  # Recurse!
             elif value.__class__.__name__ == 'list':
                 for r in value:
-                    self.update_references(r)  # Recurse!
+                    self.update_references(r, parent_uuid)  # Recurse!
 
     def update_request(self, entry):
         """Updates a transaction bundle's request to include ifNoneExist.
@@ -122,11 +126,21 @@ class EntryReferenceUpdater:
             )
 
     def update(self, entries):
+        self._referrers.clear()
         self.collect_ids(entries)
         for entry in entries:
             self.update_identifier(entry['resource'])
             self.update_request(entry)
-            self.update_references(entry['resource'])
+            self.update_references(entry['resource'], entry['resource']['id'])
+            yield entry
+
+    def compare(self, left, right):
+        left_id, right_id = left['resource']['id'], right['resource']['id']
+        if left_id not in self._referrers:
+            return 0
+        if right_id in self._referrers[left_id]:
+            return -1
+        return 1
 
 
 class Server:
@@ -220,6 +234,7 @@ def main(data, server, tag):
             bundle = json.loads(fd.read())
             entries = bundle['entry']
             entries[:] = [e for e in entry_updatr.update(entries)]
+            entries.sort(key=functools.cmp_to_key(entry_updatr.compare))
             entries[:] = [e for e in entry_tagger.tag(entries)]
             bundle_count += 1
 
