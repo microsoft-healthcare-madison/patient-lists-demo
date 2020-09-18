@@ -36,7 +36,7 @@ class Error(Exception):
 
 
 class EntryTagger:
-    """Injects a tag into bundle entries before they are loaded."""
+    """Injects a meta tag into bundle entries before they are loaded."""
     def __init__(self, tag_query, tags=None):
         self._query = tag_query.strip()
         if not tags:
@@ -57,6 +57,9 @@ class EntryReferenceUpdater:
 
     _id_type = {}
     _identifier = 'https://github.com/synthetichealth/synthea'
+    _no_identifier_types = [
+        'Provenance',
+    ]
 
     def collect_ids(self, entries):
         """Updates the collection mapping uuid to resourceType for each entry.
@@ -68,7 +71,33 @@ class EntryReferenceUpdater:
             e['resource']['id']: e['resource']['resourceType'] for e in entries
         })
 
+    def update_identifier(self, resource):
+        """Updates a resource identifier to include the synthea ID, if missing.
+
+        Param:
+          resource: a FHIR Resource dict.
+        """
+        if resource['resourceType'] in self._no_identifier_types:
+            return
+        uuid = resource['id']
+        synthea_id = {
+            'system': self._identifier,
+            'value': uuid,
+        }
+        resource.setdefault('identifier', [synthea_id])
+        if not [x for x in resource['identifier'] if x.get('value') == uuid]:
+            resource['identifier'].append(synthea_id)
+
     def update_references(self, resource):
+        """Recursively updates all references in a Resource to be conditional.
+
+        See Conditional References: https://www.hl7.org/fhir/http.html#trules
+
+        Param:
+          resource: a FHIR Resource dict.
+        """
+        if resource.__class__.__name__ != 'dict':
+            return
         for key, value in resource.items():
             if key == 'reference' and value.startswith('urn:uuid:'):
                 uuid = value.split(':')[-1]
@@ -77,9 +106,15 @@ class EntryReferenceUpdater:
             elif value.__class__.__name__ == 'dict':
                 self.update_references(value)  # Recurse!
             elif value.__class__.__name__ == 'list':
-                map(self.update_references, value)  # Recurse!
+                for r in value:
+                    self.update_references(r)  # Recurse!
 
     def update_request(self, entry):
+        """Updates a transaction bundle's request to include ifNoneExist.
+
+        Param:
+          entry: a FHIR bundle Entry dict.
+        """
         if 'identifier' in entry['resource']:
             entry['request'].setdefault(
                 'ifNoneExist',
@@ -87,10 +122,11 @@ class EntryReferenceUpdater:
             )
 
     def update(self, entries):
+        self.collect_ids(entries)
         for entry in entries:
+            self.update_identifier(entry['resource'])
             self.update_request(entry)
             self.update_references(entry['resource'])
-            yield entry
 
 
 class Server:
@@ -183,7 +219,6 @@ def main(data, server, tag):
         with open(json_file) as fd:
             bundle = json.loads(fd.read())
             entries = bundle['entry']
-            entry_updatr.collect_ids(entries)
             entries[:] = [e for e in entry_updatr.update(entries)]
             entries[:] = [e for e in entry_tagger.tag(entries)]
             bundle_count += 1
