@@ -14,6 +14,7 @@ TODO:
   [ ] make --server mandatory?
 
 """
+import copy
 import functools
 import glob
 import json
@@ -94,6 +95,9 @@ class EntryReferenceUpdater:
         """Recursively updates all references in a Resource to be conditional.
 
         See Conditional References: https://www.hl7.org/fhir/http.html#trules
+
+        An index of referrers is cached in self._referrers to map the resource
+        that is referenced to the resources that reference it.
 
         Param:
           resource: a FHIR Resource dict.
@@ -187,7 +191,6 @@ class Server:
 
 
 def load_bundle(server, bundle):
-    print(f'LOADING BUNDLE...')
     r = server.receive(bundle)
     success = ['200', '201', '200 OK', '201 Created']
     if r.status_code == 200:
@@ -239,7 +242,11 @@ def main(data, server, tag):
             bundle_count += 1
 
         if server:
-            load_bundle(fhir_server, bundle)
+            print(f'LOADING BUNDLE...')
+            b = copy.copy(bundle)
+            for entry in entries:
+                b['entry'] = [entry]
+                load_bundle(fhir_server, b)
 
 
 if __name__ == '__main__':
