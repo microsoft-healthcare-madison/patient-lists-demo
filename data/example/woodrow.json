@@ -3062,10 +3062,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:796980e6-b0c4-188b-7ea0-1745234cbb75",
+      "fullUrl": "urn:uuid:97ee369c-be87-f294-ecef-36a53e7d0ccd",
       "resource": {
         "resourceType": "PractitionerRole",
-        "id": "796980e6-b0c4-188b-7ea0-1745234cbb75",
+        "id": "97ee369c-be87-f294-ecef-36a53e7d0ccd",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole"
@@ -5055,10 +5055,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:93880795-00a6-e362-b04c-45c60d9fd0d6",
+      "fullUrl": "urn:uuid:2197993e-36b2-3958-6cfe-85252aa0e574",
       "resource": {
         "resourceType": "PractitionerRole",
-        "id": "93880795-00a6-e362-b04c-45c60d9fd0d6",
+        "id": "2197993e-36b2-3958-6cfe-85252aa0e574",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole"
@@ -12957,7 +12957,7 @@
             "reference": "urn:uuid:9b7a19e8-ba4a-3308-aed3-008b19037396"
           },
           {
-            "reference": "urn:uuid:796980e6-b0c4-188b-7ea0-1745234cbb75"
+            "reference": "urn:uuid:97ee369c-be87-f294-ecef-36a53e7d0ccd"
           },
           {
             "reference": "urn:uuid:0d839087-0735-48ba-e724-1dbfe4fbbf4e"
@@ -13017,7 +13017,7 @@
             "reference": "urn:uuid:d36ee1c2-fb6e-30cd-91fc-c5ffe962c7a8"
           },
           {
-            "reference": "urn:uuid:93880795-00a6-e362-b04c-45c60d9fd0d6"
+            "reference": "urn:uuid:2197993e-36b2-3958-6cfe-85252aa0e574"
           },
           {
             "reference": "urn:uuid:7e90c108-5311-f26a-fb9c-d01593b8a13d"
