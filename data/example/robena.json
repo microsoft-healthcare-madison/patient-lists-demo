@@ -3690,10 +3690,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+      "fullUrl": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
       "resource": {
         "resourceType": "Location",
-        "id": "c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+        "id": "58a5217a-261a-fe75-273f-9298dcbc334c",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location"
@@ -3886,7 +3886,7 @@
         ],
         "location": [
           {
-            "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+            "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
             "display": "STOUGHTON HOSPITAL"
           }
         ],
@@ -3982,7 +3982,7 @@
         "location": [
           {
             "location": {
-              "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+              "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
               "display": "STOUGHTON HOSPITAL"
             }
           }
@@ -5568,7 +5568,7 @@
           "end": "2020-02-23T08:12:35-06:00"
         },
         "location": {
-          "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+          "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
           "display": "STOUGHTON HOSPITAL"
         },
         "reasonReference": [
@@ -5615,7 +5615,7 @@
           "end": "2020-02-27T08:15:35-06:00"
         },
         "location": {
-          "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+          "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
           "display": "STOUGHTON HOSPITAL"
         },
         "reasonReference": [
@@ -5950,7 +5950,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+                "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
                 "display": "STOUGHTON HOSPITAL"
               }
             }
@@ -5969,7 +5969,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+                "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
                 "display": "STOUGHTON HOSPITAL"
               }
             }
@@ -6153,7 +6153,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+                "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
                 "display": "STOUGHTON HOSPITAL"
               }
             }
@@ -6172,7 +6172,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+                "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
                 "display": "STOUGHTON HOSPITAL"
               }
             }
@@ -6374,7 +6374,7 @@
           ]
         },
         "facility": {
-          "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+          "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
           "display": "STOUGHTON HOSPITAL"
         },
         "diagnosis": [
@@ -6770,7 +6770,7 @@
           "reference": "#referral"
         },
         "facility": {
-          "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+          "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
           "display": "STOUGHTON HOSPITAL"
         },
         "claim": {
@@ -9968,7 +9968,7 @@
         "location": [
           {
             "location": {
-              "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+              "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
               "display": "STOUGHTON HOSPITAL"
             }
           }
@@ -10356,7 +10356,7 @@
           ]
         },
         "facility": {
-          "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+          "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
           "display": "STOUGHTON HOSPITAL"
         },
         "diagnosis": [
@@ -10500,7 +10500,7 @@
           "reference": "#referral"
         },
         "facility": {
-          "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29",
+          "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c",
           "display": "STOUGHTON HOSPITAL"
         },
         "claim": {
@@ -12838,7 +12838,7 @@
             "reference": "urn:uuid:445c3992-3087-b4ce-c99f-b9a2a1cf6533"
           },
           {
-            "reference": "urn:uuid:c6b716ce-f456-ce17-b1f6-76c1f8eaaf29"
+            "reference": "urn:uuid:58a5217a-261a-fe75-273f-9298dcbc334c"
           },
           {
             "reference": "urn:uuid:e51e22f5-20b8-3971-9353-fe449dfd7a3e"

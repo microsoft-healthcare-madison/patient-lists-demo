@@ -7688,10 +7688,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+      "fullUrl": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
       "resource": {
         "resourceType": "Location",
-        "id": "3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+        "id": "8b1e4220-4178-9072-f664-55cc8d5d226e",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location"
@@ -7884,7 +7884,7 @@
         ],
         "location": [
           {
-            "reference": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+            "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
             "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
           }
         ],
@@ -7980,7 +7980,7 @@
         "location": [
           {
             "location": {
-              "reference": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+              "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
               "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
             }
           }
@@ -8864,7 +8864,7 @@
           "end": "2020-03-09T12:27:51-05:00"
         },
         "location": {
-          "reference": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+          "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
           "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
         },
         "reasonReference": [
@@ -8911,7 +8911,7 @@
           "end": "2020-03-14T12:31:51-05:00"
         },
         "location": {
-          "reference": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+          "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
           "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
         },
         "reasonReference": [
@@ -9218,7 +9218,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+                "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
                 "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
               }
             }
@@ -9237,7 +9237,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+                "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
                 "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
               }
             }
@@ -9421,7 +9421,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+                "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
                 "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
               }
             }
@@ -9440,7 +9440,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+                "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
                 "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
               }
             }
@@ -9642,7 +9642,7 @@
           ]
         },
         "facility": {
-          "reference": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+          "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
           "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
         },
         "diagnosis": [
@@ -9928,7 +9928,7 @@
           "reference": "#referral"
         },
         "facility": {
-          "reference": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf",
+          "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
           "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
         },
         "claim": {
@@ -10841,7 +10841,7 @@
             "reference": "urn:uuid:6cfc6d84-787a-3509-d75e-bf89e0a0d9c2"
           },
           {
-            "reference": "urn:uuid:3dea815a-bfe3-6541-a86c-4c933f8eb7cf"
+            "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e"
           },
           {
             "reference": "urn:uuid:0a1fdc5d-ff80-3cb2-afbf-7ce312cc0865"

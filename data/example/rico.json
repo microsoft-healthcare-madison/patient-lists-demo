@@ -3949,10 +3949,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:ea641171-c079-f80d-b739-badcb399206e",
+      "fullUrl": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
       "resource": {
         "resourceType": "Location",
-        "id": "ea641171-c079-f80d-b739-badcb399206e",
+        "id": "bbaab653-ed67-5de4-91bb-0e338106252e",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location"
@@ -4145,7 +4145,7 @@
         ],
         "location": [
           {
-            "reference": "urn:uuid:ea641171-c079-f80d-b739-badcb399206e",
+            "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
             "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
           }
         ],
@@ -4241,7 +4241,7 @@
         "location": [
           {
             "location": {
-              "reference": "urn:uuid:ea641171-c079-f80d-b739-badcb399206e",
+              "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
               "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
             }
           }
@@ -4741,7 +4741,7 @@
           "end": "2012-08-24T05:12:24-05:00"
         },
         "location": {
-          "reference": "urn:uuid:ea641171-c079-f80d-b739-badcb399206e",
+          "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
           "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
         }
       },
@@ -4780,7 +4780,7 @@
         "occurrenceDateTime": "2012-08-24T04:57:24-05:00",
         "primarySource": true,
         "location": {
-          "reference": "urn:uuid:ea641171-c079-f80d-b739-badcb399206e",
+          "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
           "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
         }
       },
@@ -4979,7 +4979,7 @@
           ]
         },
         "facility": {
-          "reference": "urn:uuid:ea641171-c079-f80d-b739-badcb399206e",
+          "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
           "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
         },
         "supportingInfo": [
@@ -5163,7 +5163,7 @@
           "reference": "#referral"
         },
         "facility": {
-          "reference": "urn:uuid:ea641171-c079-f80d-b739-badcb399206e",
+          "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
           "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
         },
         "claim": {
@@ -11887,7 +11887,7 @@
             "reference": "urn:uuid:1d199a29-d29e-082e-dc20-04ad7ebdaaf5"
           },
           {
-            "reference": "urn:uuid:ea641171-c079-f80d-b739-badcb399206e"
+            "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e"
           },
           {
             "reference": "urn:uuid:291f29b9-5c02-3324-974b-defb626d3bd2"

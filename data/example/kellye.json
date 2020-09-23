@@ -8052,10 +8052,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194",
+      "fullUrl": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
       "resource": {
         "resourceType": "Location",
-        "id": "06424e38-bd66-3519-3664-494ee02a3194",
+        "id": "bbaab653-ed67-5de4-91bb-0e338106252e",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location"
@@ -8248,7 +8248,7 @@
         ],
         "location": [
           {
-            "reference": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194",
+            "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
             "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
           }
         ],
@@ -8344,7 +8344,7 @@
         "location": [
           {
             "location": {
-              "reference": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194",
+              "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
               "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
             }
           }
@@ -8610,7 +8610,7 @@
           ]
         },
         "facility": {
-          "reference": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194",
+          "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
           "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
         },
         "diagnosis": [
@@ -8754,7 +8754,7 @@
           "reference": "#referral"
         },
         "facility": {
-          "reference": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194",
+          "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
           "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
         },
         "claim": {
@@ -9855,7 +9855,7 @@
             "reference": "urn:uuid:2a400403-4f14-d93f-8d0d-191398574170"
           },
           {
-            "reference": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194"
+            "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e"
           },
           {
             "reference": "urn:uuid:291f29b9-5c02-3324-974b-defb626d3bd2"

@@ -2485,10 +2485,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945",
+      "fullUrl": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
       "resource": {
         "resourceType": "Location",
-        "id": "899b9d02-f8e5-abe3-3ee5-15ad48489945",
+        "id": "6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location"
@@ -2681,7 +2681,7 @@
         ],
         "location": [
           {
-            "reference": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945",
+            "reference": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
             "display": "COLUMBUS COMMUNITY HOSPITAL"
           }
         ],
@@ -2777,7 +2777,7 @@
         "location": [
           {
             "location": {
-              "reference": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945",
+              "reference": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
               "display": "COLUMBUS COMMUNITY HOSPITAL"
             }
           }
@@ -3991,7 +3991,7 @@
           "end": "2020-02-27T13:32:16-06:00"
         },
         "location": {
-          "reference": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945",
+          "reference": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
           "display": "COLUMBUS COMMUNITY HOSPITAL"
         },
         "reasonReference": [
@@ -4038,7 +4038,7 @@
           "end": "2020-03-04T13:35:16-06:00"
         },
         "location": {
-          "reference": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945",
+          "reference": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
           "display": "COLUMBUS COMMUNITY HOSPITAL"
         },
         "reasonReference": [
@@ -4373,7 +4373,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945",
+                "reference": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
                 "display": "COLUMBUS COMMUNITY HOSPITAL"
               }
             }
@@ -4392,7 +4392,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945",
+                "reference": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
                 "display": "COLUMBUS COMMUNITY HOSPITAL"
               }
             }
@@ -4576,7 +4576,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945",
+                "reference": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
                 "display": "COLUMBUS COMMUNITY HOSPITAL"
               }
             }
@@ -4595,7 +4595,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945",
+                "reference": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
                 "display": "COLUMBUS COMMUNITY HOSPITAL"
               }
             }
@@ -4797,7 +4797,7 @@
           ]
         },
         "facility": {
-          "reference": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945",
+          "reference": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
           "display": "COLUMBUS COMMUNITY HOSPITAL"
         },
         "diagnosis": [
@@ -5061,7 +5061,7 @@
           "reference": "#referral"
         },
         "facility": {
-          "reference": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945",
+          "reference": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8",
           "display": "COLUMBUS COMMUNITY HOSPITAL"
         },
         "claim": {
@@ -11196,7 +11196,7 @@
             "reference": "urn:uuid:d25cb4eb-207f-88e2-047c-179da07e9d58"
           },
           {
-            "reference": "urn:uuid:899b9d02-f8e5-abe3-3ee5-15ad48489945"
+            "reference": "urn:uuid:6e6d6f14-ca4a-0d41-c7ac-173368e0a3c8"
           },
           {
             "reference": "urn:uuid:77a1d5dc-2a8e-3fc3-a59b-e0d57d99ff49"
