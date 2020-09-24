@@ -39,11 +39,11 @@
         "type": "person",
         "name": "Organization Managed #1",
         "managingEntity": {
-          "reference": "Organization/1461400"
+          "reference": "Organization?identifier=e6c5d179-370a-3659-9ce6-3d09da3c3ad0"
         },
         "member": [ {
           "entity": {
-            "reference": "Patient/1461398"
+            "reference": "Patient?identifier=678f72e9-9de7-59d5-37ce-13a92d481dfe"
           }
         } ]
       },
@@ -61,17 +61,17 @@
         "type": "person",
         "name": "Practitioner Managed #1",
         "managingEntity": {
-          "reference": "Practitioner/1461401"
+          "reference": "Practitioner?identifier=9b7a19e8-ba4a-3308-aed3-008b19037396"
         },
         "member": [
           {
             "entity": {
-              "reference": "Patient/1461398"
+              "reference": "Patient?identifier=678f72e9-9de7-59d5-37ce-13a92d481dfe"
             }
           },
           {
             "entity": {
-              "reference": "Patient/1461624"
+              "reference": "Patient?identifier=b6fc7c1e-c9d4-50ff-6a41-650c78d713a0"
             }
         } ]
       },
@@ -97,12 +97,12 @@
           },
           "exclude": "false",
           "valueReference": {
-            "reference": "Location/1461399"
+            "reference": "Location?identifier=5f0a03d6-92b8-6ec2-cdd2-893281c43776"
           }
         } ],
         "member": [ {
           "entity": {
-            "reference": "Patient/1461398"
+            "reference": "Patient?identifier=678f72e9-9de7-59d5-37ce-13a92d481dfe"
           }
         } ]
       },
@@ -128,12 +128,12 @@
           },
           "exclude": "false",
           "valueReference": {
-            "reference": "CareTeam/1463628"
+            "reference": "CareTeam?identifier=155c6d2f-dfe8-9587-6caa-6dff329246ea"
           }
         } ],
         "member": [ {
           "entity": {
-            "reference": "Patient/1461624"
+            "reference": "Patient?identifier=678f72e9-9de7-59d5-37ce-13a92d481dfe"
           }
         } ]
       },

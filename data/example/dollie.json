@@ -3694,10 +3694,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a",
+      "fullUrl": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
       "resource": {
         "resourceType": "Location",
-        "id": "ebbd76f2-8806-3e9f-4722-81e50882c04a",
+        "id": "8b1e4220-4178-9072-f664-55cc8d5d226e",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location"
@@ -3847,10 +3847,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:bba126a5-ae22-a482-6988-8121e0aa88fc",
+      "fullUrl": "urn:uuid:b48cb1b7-1edb-9d05-12a5-3c576f6185a0",
       "resource": {
         "resourceType": "PractitionerRole",
-        "id": "bba126a5-ae22-a482-6988-8121e0aa88fc",
+        "id": "b48cb1b7-1edb-9d05-12a5-3c576f6185a0",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole"
@@ -3890,7 +3890,7 @@
         ],
         "location": [
           {
-            "reference": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a",
+            "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
             "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
           }
         ],
@@ -3986,7 +3986,7 @@
         "location": [
           {
             "location": {
-              "reference": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a",
+              "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
               "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
             }
           }
@@ -5262,7 +5262,7 @@
           "end": "2020-03-07T00:55:52-06:00"
         },
         "location": {
-          "reference": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a",
+          "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
           "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
         },
         "reasonReference": [
@@ -5309,7 +5309,7 @@
           "end": "2020-03-09T01:59:52-05:00"
         },
         "location": {
-          "reference": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a",
+          "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
           "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
         },
         "reasonReference": [
@@ -5644,7 +5644,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a",
+                "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
                 "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
               }
             }
@@ -5663,7 +5663,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a",
+                "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
                 "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
               }
             }
@@ -5847,7 +5847,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a",
+                "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
                 "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
               }
             }
@@ -5866,7 +5866,7 @@
               },
               "status": "completed",
               "location": {
-                "reference": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a",
+                "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
                 "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
               }
             }
@@ -6068,7 +6068,7 @@
           ]
         },
         "facility": {
-          "reference": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a",
+          "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
           "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
         },
         "diagnosis": [
@@ -6354,7 +6354,7 @@
           "reference": "#referral"
         },
         "facility": {
-          "reference": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a",
+          "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
           "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
         },
         "claim": {
@@ -11575,7 +11575,7 @@
             "reference": "urn:uuid:b81ccd89-8576-65ab-5314-d3bfc0ed166f"
           },
           {
-            "reference": "urn:uuid:ebbd76f2-8806-3e9f-4722-81e50882c04a"
+            "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e"
           },
           {
             "reference": "urn:uuid:0a1fdc5d-ff80-3cb2-afbf-7ce312cc0865"
@@ -11584,7 +11584,7 @@
             "reference": "urn:uuid:03e0b346-c96f-3473-96a7-74c3c7bf3dde"
           },
           {
-            "reference": "urn:uuid:bba126a5-ae22-a482-6988-8121e0aa88fc"
+            "reference": "urn:uuid:b48cb1b7-1edb-9d05-12a5-3c576f6185a0"
           },
           {
             "reference": "urn:uuid:8f44a10a-dcf1-d7fb-8b04-e491fd52fbd5"

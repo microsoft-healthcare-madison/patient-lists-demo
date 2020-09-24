@@ -3085,10 +3085,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:d944b1f3-6800-b7b3-bc31-7dd71d59e12e",
+      "fullUrl": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
       "resource": {
         "resourceType": "Location",
-        "id": "d944b1f3-6800-b7b3-bc31-7dd71d59e12e",
+        "id": "8b1e4220-4178-9072-f664-55cc8d5d226e",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location"
@@ -3238,10 +3238,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:dce265ba-d618-d687-32a4-02a7347f0acb",
+      "fullUrl": "urn:uuid:b48cb1b7-1edb-9d05-12a5-3c576f6185a0",
       "resource": {
         "resourceType": "PractitionerRole",
-        "id": "dce265ba-d618-d687-32a4-02a7347f0acb",
+        "id": "b48cb1b7-1edb-9d05-12a5-3c576f6185a0",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole"
@@ -3281,7 +3281,7 @@
         ],
         "location": [
           {
-            "reference": "urn:uuid:d944b1f3-6800-b7b3-bc31-7dd71d59e12e",
+            "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
             "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
           }
         ],
@@ -3388,7 +3388,7 @@
         "location": [
           {
             "location": {
-              "reference": "urn:uuid:d944b1f3-6800-b7b3-bc31-7dd71d59e12e",
+              "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
               "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
             }
           }
@@ -3713,7 +3713,7 @@
           ]
         },
         "facility": {
-          "reference": "urn:uuid:d944b1f3-6800-b7b3-bc31-7dd71d59e12e",
+          "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
           "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
         },
         "diagnosis": [
@@ -3857,7 +3857,7 @@
           "reference": "#referral"
         },
         "facility": {
-          "reference": "urn:uuid:d944b1f3-6800-b7b3-bc31-7dd71d59e12e",
+          "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e",
           "display": "UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY"
         },
         "claim": {
@@ -8052,10 +8052,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194",
+      "fullUrl": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
       "resource": {
         "resourceType": "Location",
-        "id": "06424e38-bd66-3519-3664-494ee02a3194",
+        "id": "bbaab653-ed67-5de4-91bb-0e338106252e",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location"
@@ -8205,10 +8205,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:8af8a415-2ee4-4b0d-7001-54264803378f",
+      "fullUrl": "urn:uuid:2197993e-36b2-3958-6cfe-85252aa0e574",
       "resource": {
         "resourceType": "PractitionerRole",
-        "id": "8af8a415-2ee4-4b0d-7001-54264803378f",
+        "id": "2197993e-36b2-3958-6cfe-85252aa0e574",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole"
@@ -8248,7 +8248,7 @@
         ],
         "location": [
           {
-            "reference": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194",
+            "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
             "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
           }
         ],
@@ -8344,7 +8344,7 @@
         "location": [
           {
             "location": {
-              "reference": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194",
+              "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
               "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
             }
           }
@@ -8610,7 +8610,7 @@
           ]
         },
         "facility": {
-          "reference": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194",
+          "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
           "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
         },
         "diagnosis": [
@@ -8754,7 +8754,7 @@
           "reference": "#referral"
         },
         "facility": {
-          "reference": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194",
+          "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e",
           "display": "SSM HEALTH ST MARY'S HOSPITAL - MADISON"
         },
         "claim": {
@@ -9681,7 +9681,7 @@
             "reference": "urn:uuid:bc557266-94d0-3ba5-d09b-96749bd6f00d"
           },
           {
-            "reference": "urn:uuid:d944b1f3-6800-b7b3-bc31-7dd71d59e12e"
+            "reference": "urn:uuid:8b1e4220-4178-9072-f664-55cc8d5d226e"
           },
           {
             "reference": "urn:uuid:0a1fdc5d-ff80-3cb2-afbf-7ce312cc0865"
@@ -9690,7 +9690,7 @@
             "reference": "urn:uuid:03e0b346-c96f-3473-96a7-74c3c7bf3dde"
           },
           {
-            "reference": "urn:uuid:dce265ba-d618-d687-32a4-02a7347f0acb"
+            "reference": "urn:uuid:b48cb1b7-1edb-9d05-12a5-3c576f6185a0"
           },
           {
             "reference": "urn:uuid:edb55803-c54e-691c-25d4-4d5c8c166ebe"
@@ -9855,7 +9855,7 @@
             "reference": "urn:uuid:2a400403-4f14-d93f-8d0d-191398574170"
           },
           {
-            "reference": "urn:uuid:06424e38-bd66-3519-3664-494ee02a3194"
+            "reference": "urn:uuid:bbaab653-ed67-5de4-91bb-0e338106252e"
           },
           {
             "reference": "urn:uuid:291f29b9-5c02-3324-974b-defb626d3bd2"
@@ -9864,7 +9864,7 @@
             "reference": "urn:uuid:d36ee1c2-fb6e-30cd-91fc-c5ffe962c7a8"
           },
           {
-            "reference": "urn:uuid:8af8a415-2ee4-4b0d-7001-54264803378f"
+            "reference": "urn:uuid:2197993e-36b2-3958-6cfe-85252aa0e574"
           },
           {
             "reference": "urn:uuid:efc6109a-0cdf-30fc-8fe3-5bfcd5699392"
