@@ -2617,10 +2617,10 @@
       }
     },
     {
-      "fullUrl": "urn:uuid:d6fa6561-27a4-72aa-2fb9-e6a0f4527318",
+      "fullUrl": "urn:uuid:97ee369c-be87-f294-ecef-36a53e7d0ccd",
       "resource": {
         "resourceType": "PractitionerRole",
-        "id": "d6fa6561-27a4-72aa-2fb9-e6a0f4527318",
+        "id": "97ee369c-be87-f294-ecef-36a53e7d0ccd",
         "meta": {
           "profile": [
             "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole"
@@ -12392,7 +12392,7 @@
             "reference": "urn:uuid:9b7a19e8-ba4a-3308-aed3-008b19037396"
           },
           {
-            "reference": "urn:uuid:d6fa6561-27a4-72aa-2fb9-e6a0f4527318"
+            "reference": "urn:uuid:97ee369c-be87-f294-ecef-36a53e7d0ccd"
           },
           {
             "reference": "urn:uuid:49ef6e2a-d4ee-0672-e3bb-77122be1a1a7"
