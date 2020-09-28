@@ -183,11 +183,80 @@ class Server:
     def url(self):
         return self._url.geturl()
 
+    def get(self, url):
+        if not url.startswith('http'):
+            url = f'{self.url}/{url}'
+        return requests.get(url, headers=self._headers)
+
+    def get_bundle_entries(self, url):
+        """Yields all the entries from a bundle, de-paginating if needed."""
+        bundle = self.get(url).json()
+        while bundle.get('entry'):
+            for entry in bundle['entry']:
+                yield entry
+            bundle['entry'].clear()
+            for link in [x for x in bundle['link'] if x['relation'] == 'next']:
+                bundle = self.get(link['url']).json()
+
+    def post(self, url, payload):
+        return requests.post(
+            self.url + url,
+            json=payload,
+            headers=self.headers
+        ).json()
+
     def receive(self, bundle):
-        # self.annotate_bundle_entries(bundle)  ## TODO: implement
         return requests.post(
             self.url, json=bundle, headers=self.headers
         )
+
+
+def get_reference(resource):
+    return '/'.join([resource['resourceType'], resource['id']])
+
+
+def get_delete(reference):
+    return {
+        'request': {
+            'method': 'DELETE',
+            'url': reference,
+        },
+    }
+
+
+def get_deletes(entries):
+    deletes = []
+    for e in entries:
+        resource = e['resource']
+        if resource['resourceType'] == 'Provenance':
+            # Delete all the Provenance.targets before deleting the Provenance.
+            references = [x['reference'] for x in resource['target']]
+            # By reversing the numeric ID order, referenced objects will be
+            # deleted before the referrers, avoiding any constraint violations.
+            references.sort(key=lambda x: int(x.split('/')[1]), reverse=True)
+            deletes.extend(map(get_delete, references))
+        deletes.append(get_delete(get_reference(resource)))
+    return deletes
+
+
+def get_transaction_bundle(entries):
+    return {
+        'resourceType': 'Bundle',
+        'type': 'batch',
+        'entry': get_deletes(entries),
+    }
+
+
+def delete_tagged(server, tag, url):
+    query = f'{url}?_count=1000&_tag={tag}'
+    entries = list(server.get_bundle_entries(query))
+    if entries:
+        server.post('', get_transaction_bundle(entries))
+
+
+def delete_everything(server, tag):
+    delete_tagged(server, tag, '/Group')
+    delete_tagged(server, tag, '/Provenance')
 
 
 def load_bundle(server, bundle):
@@ -219,15 +288,23 @@ def list_files(dirname):
     help='An open FHIR server base URL.  Set to "" to disable.'
 )
 @click.option(
-    '--tag', '-t', default=RESOURCE_TAG, show_default=True
+    '--tag', '-t', default=RESOURCE_TAG, show_default=True,
+    help='A data tag applied to loaded (or found on deleted) resources.',
 )
-def main(data, server, tag):
+@click.option(
+    '--delete-all/--no-delete', '-D', default=True, show_default=True,
+    help='Deletes all resources tagged with the --tag value.'
+)
+def main(data, server, tag, delete_all):
     entry_updatr = EntryReferenceUpdater()
     entry_tagger = EntryTagger(tag)
     bundle_count = 0
 
     if server:
         fhir_server = Server(server)
+
+    if delete_all:
+        delete_everything(fhir_server, tag)
 
     if data and not os.path.isdir(data):
         raise Exception(f'Data dir does not exist: {data}')
