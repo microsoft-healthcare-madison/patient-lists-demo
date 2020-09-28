@@ -28,8 +28,8 @@ while true; do
 done
 
 echo "Loading ${DATA} data..."
-time ./bin/load.py -d "${DATA}"
-time ./bin/load.py -d "${DATA}/lists"
+time ./bin/load.py --no-delete -d "${DATA}"
+time ./bin/load.py --no-delete -d "${DATA}/lists"
 echo 'DONE!'
 
 echo "Press Ctrl-C to close the server process..."
