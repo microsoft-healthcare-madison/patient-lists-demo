@@ -23,7 +23,7 @@
         "id": "1",
         "actual": true,
         "type": "animal",
-        "name": "Empty #2"
+        "name": "Empty #2 (animal)"
       },
       "request": {
         "method": "POST",
@@ -41,11 +41,13 @@
         "managingEntity": {
           "reference": "Organization?identifier=e6c5d179-370a-3659-9ce6-3d09da3c3ad0"
         },
-        "member": [ {
-          "entity": {
-            "reference": "Patient?identifier=678f72e9-9de7-59d5-37ce-13a92d481dfe"
+        "member": [
+          {
+            "entity": {
+              "reference": "Patient?identifier=678f72e9-9de7-59d5-37ce-13a92d481dfe"
+            }
           }
-        } ]
+        ]
       },
       "request": {
         "method": "POST",
@@ -73,7 +75,8 @@
             "entity": {
               "reference": "Patient?identifier=b6fc7c1e-c9d4-50ff-6a41-650c78d713a0"
             }
-        } ]
+          }
+        ]
       },
       "request": {
         "method": "POST",
@@ -88,23 +91,29 @@
         "actual": true,
         "type": "person",
         "name": "Location-based",
-        "characteristic": [ {
-          "code": {
-            "coding": [ {
-              "system": "http://argonautproject.org/patient-lists/CodeSystem/characteristics",
-              "code": "at-location"
-            } ]
-          },
-          "exclude": "false",
-          "valueReference": {
-            "reference": "Location?identifier=5f0a03d6-92b8-6ec2-cdd2-893281c43776"
+        "characteristic": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://argonautproject.org/patient-lists/CodeSystem/characteristics",
+                  "code": "at-location"
+                }
+              ]
+            },
+            "exclude": "false",
+            "valueReference": {
+              "reference": "Location?identifier=5f0a03d6-92b8-6ec2-cdd2-893281c43776"
+            }
           }
-        } ],
-        "member": [ {
-          "entity": {
-            "reference": "Patient?identifier=678f72e9-9de7-59d5-37ce-13a92d481dfe"
+        ],
+        "member": [
+          {
+            "entity": {
+              "reference": "Patient?identifier=678f72e9-9de7-59d5-37ce-13a92d481dfe"
+            }
           }
-        } ]
+        ]
       },
       "request": {
         "method": "POST",
@@ -119,23 +128,205 @@
         "actual": true,
         "type": "person",
         "name": "Care Team List #1",
-        "characteristic": [ {
-          "code": {
-            "coding": [ {
-              "system": "http://argonautproject.org/patient-lists/CodeSystem/characteristics",
-              "code": "attributed-to-care-team"
-            } ]
+        "characteristic": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://argonautproject.org/patient-lists/CodeSystem/characteristics",
+                  "code": "attributed-to-care-team"
+                }
+              ]
+            },
+            "exclude": "false",
+            "valueReference": {
+              "reference": "CareTeam?identifier=155c6d2f-dfe8-9587-6caa-6dff329246ea"
+            }
+          }
+        ],
+        "member": [
+          {
+            "entity": {
+              "reference": "Patient?identifier=678f72e9-9de7-59d5-37ce-13a92d481dfe"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Group"
+      }
+    },
+    {
+      "fullUrl": "Group/6",
+      "resource": {
+        "resourceType": "Group",
+        "id": "6",
+        "actual": true,
+        "type": "person",
+        "name": "All Patients",
+        "member": [
+          {
+            "entity": {
+              "reference": "Patient?identifier=678f72e9-9de7-59d5-37ce-13a92d481dfe"
+            }
           },
-          "exclude": "false",
-          "valueReference": {
-            "reference": "CareTeam?identifier=155c6d2f-dfe8-9587-6caa-6dff329246ea"
+          {
+            "entity": {
+              "reference": "Patient?identifier=03de8bdf-e224-23ba-ee00-171e571fcaa9"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=b6fc7c1e-c9d4-50ff-6a41-650c78d713a0"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=a4b11edb-0ba1-8a8c-467a-5f49a4dd9b94"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=15dae894-53c1-d58b-f0a8-15a705e0bd48"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=6a331b69-6fed-6c7d-3ce6-49d28d6855b6"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=58de8234-c5d3-0fb0-3057-6bf4c06ea7df"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=a3702704-0404-4270-1566-321ea3d2c20a"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=d4820cef-400d-3a84-2f6f-fc327784a541"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=a2a9d7b7-bfe5-0f9b-f4bb-f0007d16b555"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=e6f1f270-1066-f18e-b874-dc82ee33ad2a"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=b28a3771-bc9f-e33b-19de-abd06a3992a0"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=5d798d8d-3323-a53b-1564-7b7bc92da697"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=15f92342-1039-fc94-ed91-e4a2ca871c0c"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=e0799093-35c4-c410-781e-c4a2827f257e"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=41159c05-ec0d-dd9d-9b81-9638a4e44177"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=dd0a8c29-22e9-75c3-bae5-3de0c0853396"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=268970fc-30c3-8dcf-0b3b-ce30a484e414"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=29a77006-48c2-840e-81c5-7246e05559e5"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=87b91bc6-07f6-634b-a909-c83e0ab672cd"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=6282e71a-08bb-b2ce-e9e8-798270512109"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=c0cc9fa7-f125-c15d-2f53-ac354f179894"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=17033627-df08-20e6-0fbd-61321fe32eb6"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=247f5830-b88c-1c0d-24be-fa8d05b7507c"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=cbc75b8e-177f-4ad2-cdd7-3a4f51a3b1b5"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=6e89c2bd-b92a-1a1f-9f86-e109ed377528"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=99f9bf5d-22ef-a6e0-dc9b-360c358f121e"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=26438180-a0f6-faf7-0570-8b1ad2184204"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=38ab2915-ebbb-50d4-6fdc-8e21542f6245"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=cdcba4c7-70b6-21c5-bd3d-8ac4a9ec98fb"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=aaa1ad6a-199a-6c3e-ae3a-e99e35ed939f"
+            }
+          },
+          {
+            "entity": {
+              "reference": "Patient?identifier=8667e1bf-078c-78d3-2ccd-3f2f3571ff49"
+            }
           }
-        } ],
-        "member": [ {
-          "entity": {
-            "reference": "Patient?identifier=678f72e9-9de7-59d5-37ce-13a92d481dfe"
-          }
-        } ]
+        ]
       },
       "request": {
         "method": "POST",
