@@ -199,11 +199,14 @@ class Server:
                 bundle = self.get(link['url']).json()
 
     def post(self, url, payload):
-        return requests.post(
-            self.url + url,
-            json=payload,
-            headers=self.headers
-        ).json()
+        try:
+            return requests.post(
+                self.url + url,
+                json=payload,
+                headers=self.headers
+            ).json()
+        except Exception as e:
+            print('ERR:', e)
 
     def receive(self, bundle):
         return requests.post(
@@ -254,9 +257,41 @@ def delete_tagged(server, tag, url):
         server.post('', get_transaction_bundle(entries))
 
 
+def indiscriminant_delete(server, tag):
+    types = [
+        'Group',
+        'Provenance',
+        'AllergyIntolerance',
+        'Bundle',
+        'CarePlan',
+        'CareTeam',
+        'Claim',
+        'Condition',
+        'Coverage',
+        'DiagnosticReport',
+        'DocumentReference',
+        'Encounter',
+        'ExplanationOfBenefit',
+        'ImagingStudy',
+        'Immunization',
+        'Location',
+        'MedicationRequest',
+        'Observation',
+        'Organization',
+        'Patient',
+        'Practitioner',
+        'PractitionerRole',
+        'Procedure',
+        'ServiceRequest'
+    ]
+    for resourceType in types:
+        delete_tagged(server, tag, f'/{resourceType}')
+
+
 def delete_everything(server, tag):
     delete_tagged(server, tag, '/Group')
     delete_tagged(server, tag, '/Provenance')
+#    indiscriminant_delete(server, tag)  # XXX
 
 
 def load_bundle(server, bundle):
