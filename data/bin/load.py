@@ -250,15 +250,17 @@ def get_transaction_bundle(entries):
     }
 
 
-def delete_tagged(server, tag, url):
+def delete_tagged(server, tag, url, show=False):
     query = f'{url}?_count=1000&_tag={tag}'
     entries = list(server.get_bundle_entries(query))
     if entries:
+        if show:
+            print(f'Found {len(entries)} {url.rsplit("/", 1)[0]}')
         server.post('', get_transaction_bundle(entries))
 
 
 def indiscriminant_delete(server, tag):
-    types = [
+    synthea_types = [
         'Group',
         'Provenance',
         'AllergyIntolerance',
@@ -284,14 +286,15 @@ def indiscriminant_delete(server, tag):
         'Procedure',
         'ServiceRequest'
     ]
-    for resourceType in types:
-        delete_tagged(server, tag, f'/{resourceType}')
+    for resourceType in synthea_types:
+        delete_tagged(server, tag, f'/{resourceType}', show=True)
 
 
 def delete_everything(server, tag):
+    print(f'Deleting resources tagged with {tag} on {server.url}...')
     delete_tagged(server, tag, '/Group')
     delete_tagged(server, tag, '/Provenance')
-#    indiscriminant_delete(server, tag)  # XXX
+    indiscriminant_delete(server, tag)  # XXX
 
 
 def load_bundle(server, bundle):
